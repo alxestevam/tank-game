@@ -1,3 +1,4 @@
 class Sprite(object):
-    #Comment
+    # Comment
+    # TODO: comments
     pass
