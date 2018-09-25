@@ -1,0 +1,2 @@
+class Sprite(object):
+    pass
