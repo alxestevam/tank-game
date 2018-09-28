@@ -2,6 +2,7 @@ from Sprite import Sprite
 from Box2D import *
 import pygame
 import pyclipper
+import queue
 
 
 class Terrain(Sprite):
@@ -17,6 +18,7 @@ class Terrain(Sprite):
         self.canDestruct = False
         self.nextDestructionRadius = 0
         self.nextDestructionPosition = b2Vec2(0, 0)
+        self.destructionQueue = queue.Queue()
 
         env.objects.append(self)
 
@@ -30,15 +32,19 @@ class Terrain(Sprite):
                 vertices_screen.append(vertex_screen)
             pygame.draw.polygon(win, self.color, vertices_screen)
 
+    def add_destruction(self, position, radius):
+        self.destructionQueue.put((position, radius))
+
     def update(self):
-        if self.canDestruct:
+        if not self.destructionQueue.empty():
+            destruction_position, destruction_radius = self.destructionQueue.get()
             surface_vertices = [[]]
 
             for fixture in self.body.fixtures:
                 surface_vertices.append(fixture.shape.vertices)
 
-            cv = self.env.make_circle_vertices(b2Vec2(self.nextDestructionPosition.x, self.nextDestructionPosition.y),
-                                               self.env.m_from_px(self.nextDestructionRadius))
+            cv = self.env.make_circle_vertices(b2Vec2(destruction_position.x, destruction_position.y),
+                                               self.env.m_from_px(destruction_radius))
             pc = pyclipper.Pyclipper()
             pc.AddPath(cv, pyclipper.PT_CLIP, True)
             pc.AddPaths(surface_vertices, pyclipper.PT_SUBJECT, True)
@@ -51,5 +57,3 @@ class Terrain(Sprite):
             for vertices in clipped:
                 chain_shape = b2ChainShape(vertices=vertices)
                 self.body.CreateFixture(shape=chain_shape)
-
-        self.canDestruct = False

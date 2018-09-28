@@ -20,8 +20,8 @@ class ContactListener(b2ContactListener):
                 bullet = object_2
                 terrain = object_1
 
-            terrain.nextDestructionPosition = b2Vec2(contact.worldManifold.points[0])
-            terrain.nextDestructionRadius = bullet.explosion_radius
-            terrain.canDestruct = True
+            next_destruction_position = b2Vec2(contact.worldManifold.points[0])
+            next_destruction_radius = bullet.explosion_radius
+            terrain.add_destruction(next_destruction_position, next_destruction_radius)
             bullet.can_remove = True
 
