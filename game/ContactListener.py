@@ -1,6 +1,6 @@
 from Box2D import *
-from Bullet import Bullet
-from Terrain import Terrain
+from game.Bullet import Bullet
+from game.Terrain import Terrain
 
 
 class ContactListener(b2ContactListener):

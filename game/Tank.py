@@ -1,5 +1,5 @@
-from Bullet import Bullet
-from Sprite import Sprite
+from game.Bullet import Bullet
+from game.Sprite import Sprite
 from Box2D import *
 import pygame
 from math import sin, cos

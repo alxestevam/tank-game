@@ -1,13 +1,12 @@
 import pygame
 from pygame.color import THECOLORS
-from random import random
 from Box2D import *
-from Environment import Environment
-from Terrain import Terrain
-from Tank import Tank
-from Sprite import Sprite
-from Bullet import Bullet
-from ContactListener import ContactListener
+from game.Environment import Environment
+from game.Terrain import Terrain
+from game.Tank import Tank
+from game.Sprite import Sprite
+from game.Bullet import Bullet
+from game.ContactListener import ContactListener
 
 
 def destruct_with_mouse(env, terrain, mouse_pos):

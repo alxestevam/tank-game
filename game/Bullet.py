@@ -1,4 +1,4 @@
-from Sprite import Sprite
+from game.Sprite import Sprite
 from Box2D import *
 import pygame
 

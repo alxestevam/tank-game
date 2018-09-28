@@ -2,10 +2,12 @@ from Box2D import *
 import math
 import pygame
 import sys
+import threading
 
 
-class Environment:
+class Environment(threading.Thread):
     def __init__(self, screensize_tuple, world):
+        threading.Thread.__init__(self, name='Environment Thread')
         self.world = world
         self.viewZoom = 10.0
         self.viewCenter = b2Vec2(0, 0.0)
