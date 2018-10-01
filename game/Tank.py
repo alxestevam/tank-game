@@ -1,14 +1,16 @@
 from game.Bullet import Bullet
-from game.Sprite import Sprite
 from Box2D import *
 import pygame
 from math import sin, cos
+from game.Entity import Entity
+import uuid
 
 
-class Tank(Sprite):
+class Tank(Entity):
     def __init__(self, env, pos, color, turret_width, turret_height, density, friction, restitution,
                  wheel_density, wheel_friction, wheel_restitution, wheel_distance_px, wheel_radius, frequency_hz,
                  torque, speed, barrel_distance, angle_arc_distance):
+        self.uidHex = uuid.uuid4().hex
 
         pos = env.convert_screen_to_world(pos[0], pos[1])
         self.angleArcDistance = angle_arc_distance

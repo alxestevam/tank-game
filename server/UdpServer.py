@@ -3,6 +3,7 @@ import socket
 import json
 import queue
 import uuid
+import time
 import server.Match as Match
 from server.Room import Room
 from server.ClientHandler import ClientHandler
@@ -59,16 +60,10 @@ class UdpServer(threading.Thread, socket.socket):
         self.clients.append(address_info)
         self.clientCounter += 1
         # Create ClientHandler
-        uid = uuid.uuid4()  # New uid for each user
-        ch = ClientHandler(self, uid, address_info, self.port + self.clientCounter, client_info)
-        self.clientAddresses[address_info] = uid
+        uid_hex = uuid.uuid4().hex  # New uid for each user
+        ch = ClientHandler(self, uid_hex, address_info, self.port + self.clientCounter, client_info)
+        self.clientAddresses[address_info] = uid_hex
         ch.start()
-        # Send Success
-        data = {'action': 'connect_client', 'payload': {'success': True}}
-        data = json.dumps(data)
-        data = data.encode('utf-8')
-
-        self.sendto(data, address_info)
 
     def create_room(self, client_handler, client_info):
         self.roomCounter += 1
@@ -78,9 +73,15 @@ class UdpServer(threading.Thread, socket.socket):
     def delete_room(self):
         pass
 
-    def player_join_room(self, payload, client_handler):
-        uid = payload['room_uid']
-        self.rooms[uid].join(client_handler)
+    def player_join_room(self, room_uid, client_handler):
+        if room_uid in self.rooms.keys():
+            return self.rooms[room_uid].join(client_handler)
+        else:
+            return None
+
+    def player_leave_room(self, client_handler):
+        if client_handler.uidHex in self.rooms.keys():
+            self.rooms[client_handler.uidHex].leave(client_handler)
 
     def create_match(self):
         pass
@@ -93,6 +94,18 @@ class UdpServer(threading.Thread, socket.socket):
         return info
 
 
+def test_menu(sv):
+    time.sleep(1)
+    op = 0
+    while op != 6:
+        op = int(input("[1] Print rooms\n"
+                       "Choose: "))
+        if op == 1:
+            print(sv.rooms)
+
+
+
 if __name__ == '__main__':
     server = UdpServer()
     server.start()
+    test_menu(server)

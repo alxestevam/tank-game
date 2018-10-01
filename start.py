@@ -68,6 +68,7 @@ while run:
             obj.show(win)
         if isinstance(obj, Terrain) or isinstance(obj, Bullet):
             obj.update()
+            print(obj.body.fixtures[0].shape.vertices)
 
     cmd = env.get_local_user_input()
     ctrl = env.controls()

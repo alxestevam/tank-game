@@ -1,10 +1,12 @@
-from game.Sprite import Sprite
+from game.Entity import Entity
 from Box2D import *
 import pygame
+import uuid
 
 
-class Bullet(Sprite):
+class Bullet(Entity):
     def __init__(self, env, pos, color, radius):
+        self.uidHex = uuid.uuid4().hex
         self.radius = radius
         self.color = color
         self.env = env

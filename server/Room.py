@@ -8,18 +8,21 @@ class Room:
         self.ownerClient = client_handler
         self.room_type = room_type
         self.ready = False
-        self.uid = uuid.uuid4()
+        self.uidHex = uuid.uuid4().hex
         self.players = dict()
-        self.players[client_handler.uid] = client_handler
+        self.players[client_handler.uidHex] = client_handler
         self.counter = 1
+        self.server.rooms[self.uidHex] = self
 
         self.autoFill = False
 
     def join(self, client_handler):
         if Constants.ROOM_CAPACITIES[self.room_type] <= self.counter + 1:
             self.counter += 1
-            self.players[client_handler.uid] = client_handler
+            self.players[client_handler.uidHex] = client_handler
             client_handler.room = self
+            return self
+        return None
 
     def leave(self, client_handler):
         if client_handler != self.ownerClient:

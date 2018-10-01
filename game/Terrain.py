@@ -1,13 +1,16 @@
 from game.Sprite import Sprite
+from game.Entity import Entity
 from Box2D import *
 import pygame
 import pyclipper
 import queue
+import uuid
 
 
-class Terrain(Sprite):
+class Terrain(Entity):
     def __init__(self, env, color=(0, 0, 0)):
         surface_vertices = [b2Vec2(0, 0), b2Vec2(150, 0), b2Vec2(150, 20), b2Vec2(100, 15), b2Vec2(0, 20)]
+        self.uidHex = uuid.uuid4().hex
 
         self.body = env.world.CreateStaticBody(position=(0, 0), userData=self)
         self.env = env
