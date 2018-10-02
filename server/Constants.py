@@ -3,5 +3,5 @@ class Constants:
     DEFAULT_PORT = 10939
     TIMEOUT = 2.0
     COMMAND_RATE = 60
-    ROOM_CAPACITIES = {'solo': 1, 'pair': 2, 'squad': 4}
+    ROOM_CAPACITIES = {'solo': 1, 'duo': 2, 'squad': 4}
     SCREEN_SIZE = (600, 600)

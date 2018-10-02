@@ -23,13 +23,13 @@ class ClientHandler(threading.Thread, socket.socket):
         self.commands = queue.Queue()
 
         self.mainRoom = Room(udp_server, self, client_info['lastRoomType'])
-        self.send_uid_to_client(port)
+        self.cmd_uid_to_client(port)
         self.currentRoom = self.mainRoom
 
     def run(self):
-        ping = threading.Thread(target=self.send_ping)
+        ping = threading.Thread(target=self.cmd_update_lobby)
         ping.start()
-        handle = threading.Thread(target=self.handle_command)
+        handle = threading.Thread(target=self.handle_commands)
         handle.start()
 
         while True:
@@ -38,23 +38,31 @@ class ClientHandler(threading.Thread, socket.socket):
 
             # self.send_world_update()
 
-    def send_uid_to_client(self, port):
+    def cmd_uid_to_client(self, port):
         data = {
-            'action': 'send_client_uid',
+            'action': 'uid_to_client',
             'payload': {'uid_hex': self.uidHex, 'port': port, 'room_uid': self.mainRoom.uidHex}
         }
 
         self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
 
-    def send_world_update(self):
-        pass
-
-    def send_ping(self):
+    def cmd_update_lobby(self):
         while True:
-            self.sendto(json.dumps({'client_uid': self.uidHex, 'action': 'ping'}).encode('utf-8'), self.clientAddress)
+            data = {
+                'client_uid': self.uidHex,
+                'action': 'update_lobby',
+                'payload': {
+                    'room_uid': self.currentRoom.uidHex,
+                    'ready': self.ready
+                }
+            }
+            self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
             time.sleep(0.1)
 
-    def handle_command(self):
+    def cmd_world_update(self):
+        pass
+
+    def handle_commands(self):
         while True:
             if not self.commands.empty():
                 data = self.commands.get()
@@ -66,36 +74,38 @@ class ClientHandler(threading.Thread, socket.socket):
                         print(err)
                         raise ValueError('Expecting a JSON string from client, but got something else:', decoded)
                     if data is not None and isinstance(data, dict):
-                        if 'client_uid' in data.keys():
+                        keys = data.keys()
+                        if 'client_uid' in keys:
                             if data['client_uid'] == self.uidHex:
-                                if 'action' in data.keys():
-                                    if data['action'] == 'join_room':
-                                        self.join_room(data)
-                                    if data['action'] == 'leave_room':
-                                        self.leave_room()
-                                    if data['action'] == 'ping':
-                                        pass
-                                        #  print('ping received, uid: ', data['client_uid'])
+                                if 'action' in keys and 'payload' in keys:
+                                    if isinstance(data['payload'], dict):
+                                        payload_keys = data['payload'].keys()
+                                        action = data['action']
+                                        if action == 'join_room':
+                                            self.handle_cmd_join_room(data, payload_keys)
+                                        if action == 'leave_room':
+                                            self.handle_cmd_leave_room()
+                                        if action == 'toggle_ready':
+                                            self.handle_cmd_toggle_ready()
+                                        if action == 'ping':
+                                            pass
 
-    def join_room(self, data):
+    def handle_cmd_join_room(self, data, payload_keys):
+        if 'room_uid' in payload_keys:
+            room_uid = data['payload']['room_uid']
+            if self.currentRoom.uidHex != room_uid:
+                room = self.server.player_join_room(room_uid, self)
+                if room is not None:
+                    print('Joining room', room_uid, self.clientAddress)
+                    self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
+                    self.currentRoom = room
+                else:
+                    print('Room invalid or full')
 
-        if 'payload' in data.keys():
-            if isinstance(data['payload'], dict):
-                if 'room_uid' in data['payload'].keys():
-                    room_uid = data['payload']['room_uid']
-                    if self.currentRoom.uidHex != room_uid:
-                        room = self.server.player_join_room(room_uid, self)
-                        if room is not None:
-                            print('Joining room', room_uid, self.clientAddress)
-                            self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
-                            self.currentRoom = room
-                        else:
-                            print('Room invalid')
-
-    def leave_room(self):
+    def handle_cmd_leave_room(self):
         if self.currentRoom != self.mainRoom:
-            self.currentRoom = self.mainRoom
-            self.server.player_leave_room(self)
+            self.room.leave_player(self)
+
             data = {
                 'client_uid': self.uidHex,
                 'action': 'join_room',
@@ -105,14 +115,9 @@ class ClientHandler(threading.Thread, socket.socket):
             }
             self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
 
-    def toggle_ready(self):
+    def handle_cmd_toggle_ready(self):
         self.ready = not self.ready
-        self.room.ready_verifier()
-
-        # Send success
-        data = {'action': 'toggle_ready', 'payload': {'success': True}}
-
-        self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
+        self.currentRoom.ready_verifier()
 
     def move_char(self):
         pass

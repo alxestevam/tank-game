@@ -19,12 +19,13 @@ class ServerHandler(threading.Thread, socket.socket):
         self.commands = queue.Queue()
         self.mainRoomUid = None
         self.currentRoomUid = None
+        self.ready = False
 
     def run(self):
-        self.connect()
+        self.cmd_connect_client()
 
-        ping = threading.Thread(target=self.send_ping)
-        handle = threading.Thread(target=self.handle_command)
+        ping = threading.Thread(target=self.cmd_ping)
+        handle = threading.Thread(target=self.handle_commands)
         handle.start()
         ping.start()
 
@@ -32,58 +33,23 @@ class ServerHandler(threading.Thread, socket.socket):
             data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
             self.commands.put(data)
 
-    def connect(self):
+    def cmd_connect_client(self):
         # TODO: Add payload for authentication
-        data = {'action': 'connect_client', 'payload': 'payload_for_authentication'}
+        data = {
+            'action': 'connect_client',
+            'payload': {
+                'description': 'payload_for_authentication'
+            }
+        }
         data = json.dumps(data)
         data = data.encode('utf-8')
 
         self.sendto(data, self.server_address)
 
-    def send_ping(self):
+    def cmd_ping(self):
         while True:
             self.sendto(json.dumps({'client_uid': self.uidHex, 'action': 'ping'}).encode('utf-8'), self.server_address)
             time.sleep(0.1)
-
-    def join_room_confirmation(self):
-        pass
-
-    def handle_command(self):
-        while True:
-            if not self.commands.empty():
-                data = self.commands.get()
-                if data:
-                    decoded = data.decode('utf-8')
-                    try:
-                        data = json.loads(decoded)
-                    except ValueError as err:
-                        print(err)
-                        raise ValueError('Expecting a JSON string from client, but got something else:', decoded)
-                    if data is not None and isinstance(data, dict):
-                        if 'client_uid' in data.keys():
-                            self.uidHex = data['client_uid']
-                        if 'action' in data.keys():
-                            if data['action'] == 'ping':
-                                pass
-                                #  print('ping received, uid: ', data['client_uid'])
-                            if data['action'] == 'send_client_uid':
-                                if 'payload' in data.keys():
-                                    if isinstance(data['payload'], dict):
-                                        pk = data['payload'].keys()
-                                        if 'uid_hex' in pk:
-                                            self.uidHex = data['payload']['uid_hex']
-                                        if 'port' in pk:
-                                            self.server_address = (self.server_address[0], data['payload']['port'])
-                                            print('connected')
-                                        if 'room_uid' in pk:
-                                            self.mainRoomUid = data['payload']['room_uid']
-                                            self.currentRoomUid = data['payload']['room_uid']
-                            if data['action'] == 'join_room':
-                                if 'payload' in data.keys():
-                                    if isinstance(data['payload'], dict):
-                                        pk = data['payload'].keys()
-                                        if 'room_uid' in pk:
-                                            self.currentRoomUid = data['payload']['room_uid']
 
     def cmd_join_room(self, uid):
         data = {
@@ -95,27 +61,82 @@ class ServerHandler(threading.Thread, socket.socket):
         }
         self.sendto(json.dumps(data).encode('utf-8'), self.server_address)
 
-    def toggle_ready(self):
-        pass
+    def cmd_toggle_ready(self):
+        data = {
+            'client_uid': self.uidHex,
+            'action': 'toggle_ready',
+            'payload': {}
+        }
+        self.sendto(json.dumps(data).encode('utf-8'), self.server_address)
 
     def cmd_leave_room(self):
         data = {
             'client_uid': self.uidHex,
-            'action': 'leave_room'
+            'action': 'leave_room',
+            'payload': {}
         }
         self.sendto(json.dumps(data).encode('utf-8'), self.server_address)
+
+    def handle_commands(self):
+        while True:
+            if not self.commands.empty():
+                data = self.commands.get()
+                if data:
+                    decoded = data.decode('utf-8')
+                    try:
+                        data = json.loads(decoded)
+                    except ValueError as err:
+                        print(err)
+                        raise ValueError('Expecting a JSON string from client, but got something else:', decoded)
+                    if data is not None and isinstance(data, dict):
+                        keys = data.keys()
+                        if 'client_uid' in data.keys():
+                            self.uidHex = data['client_uid']
+                        if 'action' in keys and 'payload' in keys:
+                            if isinstance(data['payload'], dict):
+                                payload_keys = data['payload'].keys()
+                                action = data['action']
+                                if action == 'update_lobby':
+                                    self.handle_cmd_update_lobby(data, payload_keys)
+                                if action == 'uid_to_client':
+                                    self.handle_cmd_uid_to_client(data, payload_keys)
+                                if action == 'join_room':
+                                    self.handle_cmd_join_room(data, payload_keys)
+
+    def handle_cmd_uid_to_client(self, data, payload_keys):
+        if 'uid_hex' in payload_keys:
+            self.uidHex = data['payload']['uid_hex']
+        if 'port' in payload_keys:
+            self.server_address = (self.server_address[0], data['payload']['port'])
+            print('connected')
+        if 'room_uid' in payload_keys:
+            self.mainRoomUid = data['payload']['room_uid']
+            self.currentRoomUid = data['payload']['room_uid']
+
+    def handle_cmd_join_room(self, data, payload_keys):
+        if 'room_uid' in payload_keys:
+            self.currentRoomUid = data['payload']['room_uid']
+
+    def handle_cmd_update_lobby(self, data, payload_keys):
+        if 'client_uid' in data.keys():
+            self.uidHex = data['client_uid']
+        if 'room_uid' in payload_keys:
+            self.currentRoomUid = data['payload']['room_uid']
+        if 'ready' in payload_keys:
+            self.ready = data['payload']['ready']
 
 
 def test_menu(server_handler):
     time.sleep(1)
     op = 0
-    while op != 6:
+    while op != 7:
         op = int(input("[1] Print Current Room uid\n"
                        "[2] Print Main Room Uid\n"
                        "[3] Join room\n"
                        "[4] Leave room\n"
                        "[5] Ready\n"
-                       "[6] Disconnect\n"
+                       "[6] Status\n"
+                       "[7] Disconnect\n"
                        "Choose: "))
         if op == 1:
             print(server_handler.currentRoomUid)
@@ -126,6 +147,13 @@ def test_menu(server_handler):
             server_handler.cmd_join_room(room_uid)
         elif op == 4:
             server_handler.cmd_leave_room()
+        elif op == 5:
+            server_handler.cmd_toggle_ready()
+        elif op == 6:
+            if server_handler.ready:
+                print('Ready!')
+            else:
+                print('Not ready.')
 
 
 if __name__ == '__main__':

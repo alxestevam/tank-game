@@ -17,31 +17,32 @@ class Room:
         self.autoFill = False
 
     def join(self, client_handler):
-        if Constants.ROOM_CAPACITIES[self.room_type] <= self.counter + 1:
+        if Constants.ROOM_CAPACITIES[self.room_type] >= self.counter + 1:
             self.counter += 1
             self.players[client_handler.uidHex] = client_handler
             client_handler.room = self
             return self
         return None
 
-    def leave(self, client_handler):
+    def leave_player(self, client_handler):
         if client_handler != self.ownerClient:
+            client_handler.currentRoom = client_handler.mainRoom
             self.counter -= 1
-            del self.players[client_handler.uid]
+            del self.players[client_handler.uidHex]
+            self.ready = False
 
     def ready_verifier(self):
         ready = True
 
-        for player in self.players:
+        for uid, player in self.players.items():
             if not player.ready:
                 ready = False
 
         if ready and self.counter == Constants.ROOM_CAPACITIES[self.room_type]:
             self.ready = True
-            self.server.readyRooms[self.room_type][self.uid] = self
+            self.server.readyRooms[self.room_type].put(self)
         elif ready and self.counter < Constants.ROOM_CAPACITIES[self.room_type] and self.autoFill:
             # TODO: Implement auto fill rooms
             pass
         else:
             self.ready = False
-            del self.server.readyRooms[self.room_type][self.uid]

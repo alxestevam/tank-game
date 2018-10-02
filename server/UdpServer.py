@@ -4,7 +4,7 @@ import json
 import queue
 import uuid
 import time
-import server.Match as Match
+from server.Match import Match
 from server.Room import Room
 from server.ClientHandler import ClientHandler
 from server.Constants import Constants
@@ -21,9 +21,9 @@ class UdpServer(threading.Thread, socket.socket):
         self.clientCounter = 0
         self.rooms = {}
         self.roomCounter = 0
-        self.readyRooms = {'solo': {},
-                           'pair': {},
-                           'squad': {}}
+        self.readyRooms = {'solo': queue.Queue(),
+                           'pair': queue.Queue(),
+                           'squad': queue.Queue()}
         # TODO: Implement auto fill rooms
         self.autoFillRooms = {'pair': {},
                               'squad': {}}
@@ -47,28 +47,39 @@ class UdpServer(threading.Thread, socket.socket):
                 print(err)
                 raise ValueError('Expecting a JSON string from client, but got something else:', decoded)
             if data is not None and isinstance(data, dict):
-                if data['action'] == 'connect_client':
-                    if address_info not in self.clientAddresses:
-                        self.connect_client(data['payload'], address_info)
+                keys = data.keys()
+                if 'action' in keys and 'payload' in keys:
+                    action = data['action']
+                    payload = data['payload']
+                    if action == 'connect_client':
+                        if isinstance(payload, dict):
+                            self.handle_cmd_connect_client(payload, address_info)
 
-    def connect_client(self, payload, address_info):
-        # TODO: Login authentication is here
+    def handle_cmd_connect_client(self, payload, address_info):
+        if address_info not in self.clientAddresses:
+            # TODO: Login authentication is here
 
-        # If login was successful then
-        client_info = self.get_client_info()  # TODO: Make this better
-        print('Client connected:', address_info, payload)
-        self.clients.append(address_info)
-        self.clientCounter += 1
-        # Create ClientHandler
-        uid_hex = uuid.uuid4().hex  # New uid for each user
-        ch = ClientHandler(self, uid_hex, address_info, self.port + self.clientCounter, client_info)
-        self.clientAddresses[address_info] = uid_hex
-        ch.start()
+            # If login was successful then
+            client_info = self.get_client_info()  # TODO: Make this better
+            print('Client connected:', address_info, payload)
+            self.clients.append(address_info)
+            self.clientCounter += 1
+            # Create ClientHandler
+            uid_hex = uuid.uuid4().hex  # New uid for each user
+            ch = ClientHandler(self, uid_hex, address_info, self.port + self.clientCounter, client_info)
+            self.clientAddresses[address_info] = uid_hex
+            ch.start()
+
+    def analyze_ready_rooms(self):
+        pass
 
     def create_room(self, client_handler, client_info):
         self.roomCounter += 1
         room = Room(self, client_handler, client_info['lastRoomType'])
         self.rooms[room.uid] = room
+
+    def create_match(self, rooms):
+        pass
 
     def delete_room(self):
         pass
@@ -79,18 +90,11 @@ class UdpServer(threading.Thread, socket.socket):
         else:
             return None
 
-    def player_leave_room(self, client_handler):
-        if client_handler.uidHex in self.rooms.keys():
-            self.rooms[client_handler.uidHex].leave(client_handler)
-
-    def create_match(self):
-        pass
-
     def get_client_info(self):
-        # TODO: Connect to the database to get this
+        # TODO: Connect to the database to get the info
 
         # This is a example of what type of dict this function has to return
-        info = {'currentLevel': 10, 'lastRoomType': 'solo', 'playerNumber': 1}
+        info = {'currentLevel': 10, 'lastRoomType': 'duo', 'playerNumber': 1}
         return info
 
 
