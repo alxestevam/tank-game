@@ -1,19 +1,19 @@
-from game.Sprite import Sprite
 from game.Entity import Entity
 from Box2D import *
 import pygame
 import pyclipper
 import queue
-import uuid
+
 
 
 class Terrain(Entity):
-    def __init__(self, env, vertices, color=(0, 0, 0)):
+    def __init__(self, env, vertices=None, color=(0, 0, 0), uid=None):
         # TODO: Add sprite image at constructor
-        super(Terrain, self).__init__(env, env.world.CreateStaticBody(position=(0, 0), userData=self))
-
+        super(Terrain, self).__init__(env, env.world.CreateStaticBody(position=(0, 0), userData=self), uid)
         self.env = env
         self.color = color
+        default = [b2Vec2(0, 0), b2Vec2(150, 0), b2Vec2(150, 20), b2Vec2(100, 20), b2Vec2(0, 20)]
+        vertices = vertices if vertices is not None else default
         chain_shape = b2ChainShape(vertices=vertices)
         fixture_def = b2FixtureDef(shape=chain_shape, density=1, friction=5, restitution=0)
         self.body.CreateFixture(fixture_def)

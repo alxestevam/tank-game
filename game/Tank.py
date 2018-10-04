@@ -3,16 +3,16 @@ from Box2D import *
 import pygame
 from math import sin, cos
 from game.Entity import Entity
-import uuid
 from game.Constants import Constants
 
 
 class Tank(Entity):
     # TODO: Put sprite image at constructor
-    def __init__(self, env, pos, color=(0, 0, 0)):
-        super(Tank, self).__init__(env, env.world.CreateDynamicBody(position=pos))
+    def __init__(self, env, pos, color=(0, 0, 0), uid=None):
+        # pos = env.convert_screen_to_world(pos[0], pos[1])
+        pos = b2Vec2(pos)
+        super(Tank, self).__init__(env, env.world.CreateDynamicBody(position=pos), uid)
 
-        pos = env.convert_screen_to_world(pos[0], pos[1])
         self.angleArcDistance = Constants.TANK_CONFIG['physics']['angle_arc_distance']
         self.env = env
         self.color = color
@@ -94,10 +94,6 @@ class Tank(Entity):
     def server_shoot(self, energy):
         bullet = Bullet(self.env, (self.body.position + self.gunBarrelDistance), radius=self.bullet_radius)
         bullet.apply_impulse(b2Vec2(cos(self.angle)*energy, sin(self.angle)*energy))
-
-    def client_shoot(self):
-        # TODO: This
-        pass
 
     def update_angle(self, increase):
         if self.direction == 1:

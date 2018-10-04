@@ -12,8 +12,8 @@ class ServerHandler(threading.Thread, socket.socket):
     def __init__(self, server_address):
         threading.Thread.__init__(self, name='ServerHandler Thread')
         socket.socket.__init__(self, type=socket.SOCK_DGRAM)
-        self.settimeout(10)
-        self.setDaemon(False)
+        self.settimeout(2)
+        self.setDaemon(True)
         self.bind(('localhost', random.randint(10000, 20000)))
         self.server_address = server_address
         self.uidHex = None
@@ -23,6 +23,7 @@ class ServerHandler(threading.Thread, socket.socket):
         self.ready = False
         self.matchUid = None
         self.gameWindow = None
+        self.lock = threading.Lock()
 
     def run(self):
         self.cmd_connect_client()
@@ -80,6 +81,14 @@ class ServerHandler(threading.Thread, socket.socket):
         }
         self.sendto(json.dumps(data).encode('utf-8'), self.server_address)
 
+    def cmd_player_shoot(self, energy):
+        data = {
+            'client_uid': self.uidHex,
+            'action': 'player_shoot',
+            'payload': {'energy': energy}
+        }
+        self.sendto(json.dumps(data).encode('utf-8'), self.server_address)
+
     def handle_commands(self):
         while True:
             if not self.commands.empty():
@@ -105,7 +114,7 @@ class ServerHandler(threading.Thread, socket.socket):
                                     self.handle_cmd_uid_to_client(data, payload_keys)
                                 if action == 'join_room':
                                     self.handle_cmd_join_room(data, payload_keys)
-                                if action == 'world_update':
+                                if action == 'world_locations':
                                     self.handle_cmd_world_locations(data, payload_keys)
 
     def handle_cmd_uid_to_client(self, data, payload_keys):
@@ -140,16 +149,19 @@ class ServerHandler(threading.Thread, socket.socket):
                 self.matchUid = None
 
     def handle_cmd_world_locations(self, data, payload_keys):
+        # print('cmd world locations received')
         if self.matchUid is not None:
             if 'locations' in payload_keys:
                 locations = data['payload']['locations']
                 if isinstance(locations, dict):
                     for uid, obj in locations.items():
+                        # self.lock.acquire()
                         if uid in self.gameWindow.env.objects:
                             if isinstance(obj, dict):
                                 self.gameWindow.update_world_obj(uid, obj)
                         elif isinstance(obj, dict):
-                                self.gameWindow.create_world_obj(obj)
+                                self.gameWindow.create_world_obj(uid, obj)
+                        # self.lock.release()
 
 
 def test_menu(server_handler):

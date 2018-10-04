@@ -12,7 +12,7 @@ class ClientHandler(threading.Thread, socket.socket):
         threading.Thread.__init__(self, name='Client Handler Thread')
         socket.socket.__init__(self, type=socket.SOCK_DGRAM)
         # TODO: Configure the timeout
-        self.settimeout(10)
+        self.settimeout(2)
         self.bind(('', port))
         self.setDaemon(True)
         self.server = udp_server
@@ -26,6 +26,7 @@ class ClientHandler(threading.Thread, socket.socket):
         self.mainRoom = Room(udp_server, self, client_info['lastRoomType'])
         self.cmd_uid_to_client(port)
         self.currentRoom = self.mainRoom
+        self.character = None
 
     def run(self):
         update_lobby = threading.Thread(target=self.cmd_update_lobby)
@@ -35,8 +36,8 @@ class ClientHandler(threading.Thread, socket.socket):
         handle_commands.start()
 
         # TODO: Make the thread stop or decide to use broadcast from Match.py
-        # world_locations = threading.Thread(target=self.cmd_world_locations)
-        # world_locations.start()
+        world_locations = threading.Thread(target=self.cmd_world_locations)
+        world_locations.start()
 
         while True:
             data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
@@ -45,15 +46,16 @@ class ClientHandler(threading.Thread, socket.socket):
             # self.send_world_update()
 
     def cmd_world_locations(self):
-        if self.match is not None:
-            data = {
-                'client_uid': self.uidHex,
-                'action': 'world_locations',
-                'payload': {
-                    'locations': self.match.world_locations()
+        while True:
+            if self.match is not None:
+                data = {
+                    'client_uid': self.uidHex,
+                    'action': 'world_locations',
+                    'payload': {
+                        'locations': self.match.world_locations()
+                    }
                 }
-            }
-            self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
+                self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
 
     def cmd_uid_to_client(self, port):
         data = {
@@ -80,7 +82,7 @@ class ClientHandler(threading.Thread, socket.socket):
 
             self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
             # TODO: Verify the need of the delay
-            time.sleep(0.1)
+            time.sleep(0)
 
     def cmd_world_update(self):
         pass
@@ -110,6 +112,8 @@ class ClientHandler(threading.Thread, socket.socket):
                                             self.handle_cmd_leave_room()
                                         if action == 'toggle_ready':
                                             self.handle_cmd_toggle_ready()
+                                        if action == 'player_shoot':
+                                            self.handle_cmd_player_shoot(data, payload_keys)
                                         if action == 'ping':
                                             pass
 
@@ -137,6 +141,13 @@ class ClientHandler(threading.Thread, socket.socket):
                 }
             }
             self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
+
+    def handle_cmd_player_shoot(self, data, payload_keys):
+        # TODO: Make this better
+        if self.match is not None and self.character is not None:
+            if 'energy' in payload_keys:
+                energy = data['payload']['energy']
+                self.character.shoot(energy)
 
     def handle_cmd_toggle_ready(self):
         self.ready = not self.ready

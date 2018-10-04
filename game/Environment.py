@@ -1,7 +1,6 @@
 from Box2D import *
 import math
 import pygame
-import sys
 import threading
 
 
@@ -49,7 +48,8 @@ class Environment(threading.Thread):
 
         return int(round(x)), int(round(y))  # return tuple of integers
 
-    def make_circle_vertices(self, point, radius):
+    @staticmethod
+    def make_circle_vertices(point, radius):
         vertices = []
         i = 0
         sharpness = 0.5
@@ -59,10 +59,11 @@ class Environment(threading.Thread):
 
         return vertices
 
-    def get_local_user_input(self):
+    @staticmethod
+    def get_local_user_input():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys.exit()
+                return 0
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     return 1
@@ -70,7 +71,8 @@ class Environment(threading.Thread):
                 if event.key == pygame.K_SPACE:
                     return 2
 
-    def controls(self):
+    @staticmethod
+    def controls():
         cmd = {}
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:

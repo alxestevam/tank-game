@@ -7,12 +7,7 @@ from game.Tank import Tank
 from game.Sprite import Sprite
 from game.Bullet import Bullet
 from game.ContactListener import ContactListener
-
-
-def destruct_with_mouse(env, terrain, mouse_pos):
-    if mouse[0]:
-        point = b2Vec2(mouse_pos)
-        terrain.circle_destruction(env.convert_screen_to_world(point.x, point.y), 30)
+from game.Constants import Constants
 
 
 def draw_charging_bar(win, charging_level):
@@ -35,7 +30,7 @@ win = pygame.display.set_mode(screen_size)
 run = True
 clock = pygame.time.Clock()
 
-terrain = Terrain(env)
+terrain = Terrain(env, Constants.TERRAIN_CONFIG['1']['vertices'])
 
 # Creating a tank to test
 
@@ -58,17 +53,14 @@ while run:
     mouse = pygame.mouse.get_pressed()
     mousePos = pygame.mouse.get_pos()
 
-    destruct_with_mouse(env, terrain, mousePos)
-
     time += dt_s  # Increasing the time counter
     win.fill(THECOLORS['white'])
 
-    for obj in env.objects:
+    for uid, obj in env.objects.copy().items():
         if isinstance(obj, Sprite):
             obj.show(win)
         if isinstance(obj, Terrain) or isinstance(obj, Bullet):
             obj.update()
-            print(obj.body.fixtures[0].shape.vertices)
 
     cmd = env.get_local_user_input()
     ctrl = env.controls()
@@ -80,12 +72,17 @@ while run:
     if not ctrl['player_move']:
         tank.stop()
 
-    if cmd == 1:
+    if cmd == 0:
+        run = False
+        break
+
+    elif cmd == 1:
         charging = True
 
     elif cmd == 2:
         charging = False
-        tank.shoot(charge_level)
+        tank.server_shoot(charge_level)
+        print('TIRO', charge_level)
         charge_level = 0
 
     if charging:

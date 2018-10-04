@@ -3,6 +3,7 @@ from server.Character import Character
 from game.ContactListener import ContactListener
 from game.Terrain import Terrain
 from game.Bullet import Bullet
+from game.Tank import Tank
 import pygame
 import uuid
 import Box2D
@@ -18,7 +19,7 @@ class Match(Environment):
         self.characters = {}
         self.uidHex = uuid.uuid4().hex
         # TODO: Add terrain variation
-        Terrain(self, Constants.TERRAIN_CONFIG['1']['vertices'])
+        Terrain(self, vertices=Constants.TERRAIN_CONFIG['1']['vertices'])
 
         # Creating the characters for each player
         team = 1
@@ -44,15 +45,15 @@ class Match(Environment):
     def world_locations(self):
         #  Generate world json data based on objects uid
         data = {}
-        for uidHex, obj in self.objects:
+        for uidHex, obj in self.objects.copy().items():
             if isinstance(obj, Terrain):
                 data[uidHex] = {
                     '__class__': obj.__class__.__name__,
-                    'vertices': []
+                    'vertices_list': []
                 }
 
                 for fixture in obj.body.fixtures:
-                    data[uidHex]['vertices'].append(fixture.shape.vertices)
+                    data[uidHex]['vertices_list'].append(fixture.shape.vertices)
             elif isinstance(obj, Bullet):
                 data[uidHex] = {
                     '__class__': obj.__class__.__name__,
@@ -69,7 +70,7 @@ class Match(Environment):
                     'bullet_type': obj.bullet_type,
                     'explosion_radius': obj.explosion_radius
                 }
-            elif isinstance(obj.body, Box2D.b2Body):
+            elif isinstance(obj, Tank):
                 data[uidHex] = {
                     '__class__': obj.__class__.__name__,
                     'position': self.to_json(obj.body.position),

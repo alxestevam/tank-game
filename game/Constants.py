@@ -3,7 +3,7 @@ from Box2D import b2Vec2
 
 class Constants:
     FPS = 60
-    BUFFER_SIZE = 4096
+    BUFFER_SIZE = 4096*10
     DEFAULT_PORT = 10939
     TIMEOUT = 2.0
     COMMAND_RATE = 60
@@ -15,7 +15,7 @@ class Constants:
             'turret_height': 20,
             'density': 1,
             'friction': 0,
-            'restitution': 0.5,
+            'restitution': 0,
             'wheel_density': 1,
             'wheel_friction': 100,
             'wheel_restitution': 0.1,
@@ -30,7 +30,7 @@ class Constants:
     }
     TERRAIN_CONFIG = {
         '1': {
-            'vertices': [b2Vec2(0, 0), b2Vec2(150, 0), b2Vec2(150, 20), b2Vec2(100, 15), b2Vec2(0, 20)],
+            'vertices': [b2Vec2(0, 0), b2Vec2(150, 0), b2Vec2(150, 20), b2Vec2(100, 20), b2Vec2(0, 20)],
             'sprite_image': None
         }
     }

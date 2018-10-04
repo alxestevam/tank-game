@@ -141,7 +141,6 @@ def test_menu(sv):
             print(sv.rooms)
 
 
-
 if __name__ == '__main__':
     server = UdpServer()
     server.start()

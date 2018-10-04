@@ -1,12 +1,11 @@
 from game.Entity import Entity
 from Box2D import *
 import pygame
-import uuid
 
 
 class Bullet(Entity):
-    def __init__(self, env, pos, color=(0, 100, 100), radius=10, bullet_type=1):
-        super(Bullet, self).__init__(env, env.world.CreateDynamicBody(position=pos, userData=self))
+    def __init__(self, env, pos, color=(0, 100, 100), radius=10, bullet_type=1, uid=None):
+        super(Bullet, self).__init__(env, env.world.CreateDynamicBody(position=pos, userData=self), uid)
         self.radius = radius
         self.color = color
         self.env = env
@@ -31,4 +30,4 @@ class Bullet(Entity):
     def update(self):
         if self.can_remove:
             self.env.world.DestroyBody(self.body)
-            self.env.objects.remove(self)
+            del self.env.objects[self.uidHex]
