@@ -4,46 +4,52 @@ import pygame
 from math import sin, cos
 from game.Entity import Entity
 import uuid
+from game.Constants import Constants
 
 
 class Tank(Entity):
-    def __init__(self, env, pos, color, turret_width, turret_height, density, friction, restitution,
-                 wheel_density, wheel_friction, wheel_restitution, wheel_distance_px, wheel_radius, frequency_hz,
-                 torque, speed, barrel_distance, angle_arc_distance):
-        self.uidHex = uuid.uuid4().hex
+    # TODO: Put sprite image at constructor
+    def __init__(self, env, pos, color=(0, 0, 0)):
+        super(Tank, self).__init__(env, env.world.CreateDynamicBody(position=pos))
 
         pos = env.convert_screen_to_world(pos[0], pos[1])
-        self.angleArcDistance = angle_arc_distance
+        self.angleArcDistance = Constants.TANK_CONFIG['physics']['angle_arc_distance']
         self.env = env
         self.color = color
-        self.wheelRadius = wheel_radius
+        self.wheelRadius = Constants.TANK_CONFIG['physics']['wheel_radius']
         self.angle = b2_pi/4
-        self.body = env.world.CreateDynamicBody(position=pos)
-        self.torque = torque
-        self.speed = speed
+        self.torque = Constants.TANK_CONFIG['physics']['torque']
+        self.speed = Constants.TANK_CONFIG['physics']['speed']
+        barrel_distance = Constants.TANK_CONFIG['physics']['gun_barrel_distance']
         barrel_distance = b2Vec2(env.m_from_px(barrel_distance[0]), env.m_from_px(barrel_distance[1]))
         self.gunBarrelDistance = barrel_distance
+        # TODO: Apply radius variation with the card mechanics
         self.bullet_radius = 10
         self.direction = 1
 
-        wheel_distance_m = self.env.m_from_px(wheel_distance_px)
+        wheel_distance_m = self.env.m_from_px(Constants.TANK_CONFIG['physics']['wheel_distance_px'])
 
-        shape = b2PolygonShape(box=(self.env.m_from_px(turret_width),
-                                    self.env.m_from_px(turret_height)))
+        shape = b2PolygonShape(box=(self.env.m_from_px(Constants.TANK_CONFIG['physics']['turret_width']),
+                                    self.env.m_from_px(Constants.TANK_CONFIG['physics']['turret_height'])))
 
-        fixture_def = b2FixtureDef(shape=shape, density=density, friction=friction, restitution=restitution)
+        fixture_def = b2FixtureDef(shape=shape,
+                                   density=Constants.TANK_CONFIG['physics']['density'],
+                                   friction=Constants.TANK_CONFIG['physics']['friction'],
+                                   restitution=Constants.TANK_CONFIG['physics']['restitution'])
         self.body.CreateFixture(fixture_def)
 
         self.wheels, self.springs = [], []
 
-        offset_y = self.env.m_from_px(turret_height/2+10)
+        offset_y = self.env.m_from_px(Constants.TANK_CONFIG['physics']['turret_height']/2+10)
 
         x = [-wheel_distance_m/2, wheel_distance_m]
         for x_p in x:
             wheel = env.world.CreateDynamicBody(position=(pos.x + x_p, pos.y - offset_y))
             circle = b2CircleShape(radius=self.env.m_from_px(self.wheelRadius))
-            fixture_def = b2FixtureDef(shape=circle, density=wheel_density, friction=wheel_friction,
-                                       restitution=wheel_restitution)
+            fixture_def = b2FixtureDef(shape=circle,
+                                       density=Constants.TANK_CONFIG['physics']['wheel_density'],
+                                       friction=Constants.TANK_CONFIG['physics']['wheel_friction'],
+                                       restitution=Constants.TANK_CONFIG['physics']['wheel_restitution'])
             wheel.CreateFixture(fixture_def)
 
             spring = env.world.CreateWheelJoint(
@@ -53,7 +59,7 @@ class Tank(Entity):
                 motorSpeed=0.0,
                 enableMotor=True,
                 maxMotorTorque=self.torque,
-                frequencyHz=frequency_hz,
+                frequencyHz=Constants.TANK_CONFIG['physics']['frequency_hz'],
                 axis=(0, 1)
             )
 
@@ -62,8 +68,6 @@ class Tank(Entity):
 
             if self.direction == 1 and self.angle < b2_pi/2:
                 self.flip()
-
-        env.objects.append(self)
 
     def move(self, direction):
         if direction == 1:  # Left
@@ -87,9 +91,13 @@ class Tank(Entity):
         for spring in self.springs:
             spring.motorSpeed = 0.0
 
-    def shoot(self, energy):
-        bullet = Bullet(self.env, (self.body.position + self.gunBarrelDistance), (0, 100, 100), self.bullet_radius)
+    def server_shoot(self, energy):
+        bullet = Bullet(self.env, (self.body.position + self.gunBarrelDistance), radius=self.bullet_radius)
         bullet.apply_impulse(b2Vec2(cos(self.angle)*energy, sin(self.angle)*energy))
+
+    def client_shoot(self):
+        # TODO: This
+        pass
 
     def update_angle(self, increase):
         if self.direction == 1:
@@ -101,7 +109,7 @@ class Tank(Entity):
         self.angle += angle_speed
 
     def draw_angle_arc(self, win):
-        # TODO: A renderização do personagem será substituída por imagens
+        # TODO: The character rendering will be placed with images
         pos = b2Vec2(self.env.convert_world_to_screen(self.body.position))
         rect = [pos.x - self.angleArcDistance / 2, pos.y - self.angleArcDistance / 2, self.angleArcDistance,
                 self.angleArcDistance]

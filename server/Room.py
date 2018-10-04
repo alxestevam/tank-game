@@ -1,5 +1,5 @@
 import uuid
-from server.Constants import Constants
+from game.Constants import Constants
 
 
 class Room:
@@ -40,6 +40,7 @@ class Room:
 
         if ready and self.counter == Constants.ROOM_CAPACITIES[self.room_type]:
             self.ready = True
+            print('Ready room', self)
             self.server.readyRooms[self.room_type].put(self)
         elif ready and self.counter < Constants.ROOM_CAPACITIES[self.room_type] and self.autoFill:
             # TODO: Implement auto fill rooms

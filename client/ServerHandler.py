@@ -4,7 +4,8 @@ import random
 import json
 import time
 import queue
-from server.Constants import Constants
+from game.Constants import Constants
+from client.GameWindow import GameWindow
 
 
 class ServerHandler(threading.Thread, socket.socket):
@@ -20,6 +21,8 @@ class ServerHandler(threading.Thread, socket.socket):
         self.mainRoomUid = None
         self.currentRoomUid = None
         self.ready = False
+        self.matchUid = None
+        self.gameWindow = None
 
     def run(self):
         self.cmd_connect_client()
@@ -102,6 +105,8 @@ class ServerHandler(threading.Thread, socket.socket):
                                     self.handle_cmd_uid_to_client(data, payload_keys)
                                 if action == 'join_room':
                                     self.handle_cmd_join_room(data, payload_keys)
+                                if action == 'world_update':
+                                    self.handle_cmd_world_locations(data, payload_keys)
 
     def handle_cmd_uid_to_client(self, data, payload_keys):
         if 'uid_hex' in payload_keys:
@@ -124,6 +129,27 @@ class ServerHandler(threading.Thread, socket.socket):
             self.currentRoomUid = data['payload']['room_uid']
         if 'ready' in payload_keys:
             self.ready = data['payload']['ready']
+        if 'match' in payload_keys:
+            match = data['payload']['match']
+            if self.matchUid is None and match is not None:
+                self.gameWindow = GameWindow(self)
+                self.gameWindow.start_game()
+                self.matchUid = match
+            if self.matchUid is not None and match is None:
+                self.gameWindow.close_game()
+                self.matchUid = None
+
+    def handle_cmd_world_locations(self, data, payload_keys):
+        if self.matchUid is not None:
+            if 'locations' in payload_keys:
+                locations = data['payload']['locations']
+                if isinstance(locations, dict):
+                    for uid, obj in locations.items():
+                        if uid in self.gameWindow.env.objects:
+                            if isinstance(obj, dict):
+                                self.gameWindow.update_world_obj(uid, obj)
+                        elif isinstance(obj, dict):
+                                self.gameWindow.create_world_obj(obj)
 
 
 def test_menu(server_handler):

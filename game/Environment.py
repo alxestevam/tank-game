@@ -1,5 +1,4 @@
 from Box2D import *
-from game.Terrain import Terrain
 import math
 import pygame
 import sys
@@ -16,36 +15,7 @@ class Environment(threading.Thread):
         self.screenSize = b2Vec2(*screensize_tuple)
         self.flipX = False
         self.flipY = True
-        self.objects = []
-        self.terrain = Terrain(self)
-
-    def world_locations(self):
-        #  Generate world json data based on objects uid
-        data = {}
-        for obj in self.objects:
-            if isinstance(obj, Box2D.b2Body):
-                data[obj.uidHex] = {
-                    '__class__': obj.__class__.__name__,
-                    'position': self.to_json(obj.position),
-                    'angle': obj.angle,
-                    'angularDamping': obj.angularDamping,
-                    'angularVelocity': obj.angularVelocity,
-                    'inertia': obj.inertia,
-                    'linearDamping': obj.linearDamping,
-                    'linearVelocity': self.to_json(obj.linearVelocity),
-                    'localCenter': self.to_json(obj.localCenter),
-                    'mass': obj.mass
-                }
-
-        data[self.terrain.uidHex] = {
-            '__class__': self.terrain.__class__.__name__,
-            'shapes': []
-        }
-
-        for fixture in self.terrain.fixtures:
-            data[self.self.terrain.uidHex]['shapes'].append(fixture.shape.vertices)
-
-        return data
+        self.objects = {}
 
     @staticmethod
     def to_json(obj):
@@ -56,9 +26,6 @@ class Environment(threading.Thread):
                 '__class__': obj_class,
                 '__value__': [obj.x, obj.y]
             }
-
-    def create_body_with_data(self, data):
-        pass
 
     def m_from_px(self, px):
         return px/self.viewZoom

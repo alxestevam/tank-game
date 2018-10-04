@@ -8,22 +8,18 @@ import uuid
 
 
 class Terrain(Entity):
-    def __init__(self, env, color=(0, 0, 0)):
-        surface_vertices = [b2Vec2(0, 0), b2Vec2(150, 0), b2Vec2(150, 20), b2Vec2(100, 15), b2Vec2(0, 20)]
-        self.uidHex = uuid.uuid4().hex
+    def __init__(self, env, vertices, color=(0, 0, 0)):
+        # TODO: Add sprite image at constructor
+        super(Terrain, self).__init__(env, env.world.CreateStaticBody(position=(0, 0), userData=self))
 
-        self.body = env.world.CreateStaticBody(position=(0, 0), userData=self)
         self.env = env
         self.color = color
-        chain_shape = b2ChainShape(vertices=surface_vertices)
+        chain_shape = b2ChainShape(vertices=vertices)
         fixture_def = b2FixtureDef(shape=chain_shape, density=1, friction=5, restitution=0)
         self.body.CreateFixture(fixture_def)
-        self.canDestruct = False
         self.nextDestructionRadius = 0
         self.nextDestructionPosition = b2Vec2(0, 0)
         self.destructionQueue = queue.Queue()
-
-        env.objects.append(self)
 
     def show(self, win):
         for fixtures in self.body.fixtures:

@@ -1,4 +1,8 @@
+from abc import abstractmethod
+
+
 class Sprite(object):
-    # Comment
-    # TODO: comments
-    pass
+
+    @abstractmethod
+    def show(self, win):
+        pass

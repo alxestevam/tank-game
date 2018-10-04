@@ -7,7 +7,7 @@ import time
 from server.Match import Match
 from server.Room import Room
 from server.ClientHandler import ClientHandler
-from server.Constants import Constants
+from game.Constants import Constants
 
 
 class UdpServer(threading.Thread, socket.socket):
@@ -22,16 +22,20 @@ class UdpServer(threading.Thread, socket.socket):
         self.rooms = {}
         self.roomCounter = 0
         self.readyRooms = {'solo': queue.Queue(),
-                           'pair': queue.Queue(),
+                           'duo': queue.Queue(),
                            'squad': queue.Queue()}
         # TODO: Implement auto fill rooms
-        self.autoFillRooms = {'pair': {},
+        self.autoFillRooms = {'duo': {},
                               'squad': {}}
         self.matches = []
 
     def run(self):
         print('Hosting at', self.getsockname())
         print('Starting')
+
+        room_analyzer = threading.Thread(target=self.analyze_ready_rooms, name='Room analyzer thread')
+        room_analyzer.setDaemon(True)
+        room_analyzer.start()
 
         while True:
             self.receive_command()
@@ -71,15 +75,39 @@ class UdpServer(threading.Thread, socket.socket):
             ch.start()
 
     def analyze_ready_rooms(self):
-        pass
+        solo_rooms = []
+        duo_rooms = []
+        squad_rooms = []
+        while True:
+            if not self.readyRooms['solo'].empty() and len(solo_rooms) < 2:
+                print('Matching room...')
+                solo_rooms.append(self.readyRooms['solo'].get())
+                print(solo_rooms)
+            if not self.readyRooms['duo'].empty() and len(duo_rooms) < 2:
+                solo_rooms.append(self.readyRooms['duo'].get())
+            if not self.readyRooms['squad'].empty() and len(squad_rooms) < 2:
+                solo_rooms.append(self.readyRooms['squad'].get())
+            if len(solo_rooms) == 2:
+                print('New Match!', solo_rooms)
+                match = Match(self, solo_rooms)
+                match.start()
+                self.matches.append(match)
+                solo_rooms = []
+            if len(duo_rooms) == 2:
+                match = Match(self, duo_rooms)
+                match.start()
+                self.matches.append(match)
+                duo_rooms = []
+            if len(squad_rooms) == 2:
+                match = Match(self, squad_rooms)
+                match.start()
+                self.matches.append(match)
+                squad_rooms = []
 
     def create_room(self, client_handler, client_info):
         self.roomCounter += 1
         room = Room(self, client_handler, client_info['lastRoomType'])
-        self.rooms[room.uid] = room
-
-    def create_match(self, rooms):
-        pass
+        self.rooms[room.uidHex] = room
 
     def delete_room(self):
         pass
@@ -94,7 +122,12 @@ class UdpServer(threading.Thread, socket.socket):
         # TODO: Connect to the database to get the info
 
         # This is a example of what type of dict this function has to return
-        info = {'currentLevel': 10, 'lastRoomType': 'duo', 'playerNumber': 1}
+        info = {
+            'currentLevel': 10,
+            'lastRoomType': 'solo',
+            'playerNumber': 1,
+            'currentSkin': 1
+        }
         return info
 
 

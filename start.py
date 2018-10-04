@@ -39,7 +39,7 @@ terrain = Terrain(env)
 
 # Creating a tank to test
 
-tank = Tank(env, (100, 100), THECOLORS['black'], 20, 20, 1, 0, 0, 1, 100, 0.1, 30, 20, 60, 500, 5, (30, 30), 150)
+tank = Tank(env, (100, 100), THECOLORS['black'])
 
 # Time counter
 time = 0
