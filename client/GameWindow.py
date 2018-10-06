@@ -98,10 +98,8 @@ class GameWindow(threading.Thread):
             """
         elif cls_name == 'Tank':
             position = b2Vec2(obj['position']['__value__'])
-            print('Creating Tank at', position)
             Tank(self.env, position, uid=uid)
         elif cls_name == 'Bullet':
-            print('Creating Bullet')
             position = b2Vec2(obj['position']['__value__'])
             radius = obj['radius']
             bullet_type = obj['bullet_type']

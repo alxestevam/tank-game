@@ -8,6 +8,7 @@ import pygame
 import uuid
 import Box2D
 from game.Constants import Constants
+from game.Sprite import Sprite
 
 
 class Match(Environment):
@@ -36,16 +37,28 @@ class Match(Environment):
         vel_iter, pos_iter = 10, 10
         run = True
         clock = pygame.time.Clock()
+        print('initializing')
+        pygame.init()
+        win = pygame.display.set_mode(Constants.SCREEN_SIZE)
         time = 0
         while run:
             dt_s = float(clock.tick(Constants.FPS)) * 1e-3
             self.world.Step(time_step, vel_iter, pos_iter)
+            self.get_local_user_input()
+            win.fill((255, 255, 255))
+            for uid, obj in self.objects.copy().items():
+                if isinstance(obj, Sprite):
+                    obj.show(win)
+                if isinstance(obj, Terrain) or isinstance(obj, Bullet):
+                    obj.update()
+            pygame.display.update()
+
             time += dt_s
 
     def world_locations(self):
         #  Generate world json data based on objects uid
         data = {}
-        for uidHex, obj in self.objects.copy().items():
+        for uidHex, obj in self.objects.items():
             if isinstance(obj, Terrain):
                 data[uidHex] = {
                     '__class__': obj.__class__.__name__,

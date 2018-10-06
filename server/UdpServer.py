@@ -50,14 +50,14 @@ class UdpServer(threading.Thread, socket.socket):
             except ValueError as err:
                 print(err)
                 raise ValueError('Expecting a JSON string from client, but got something else:', decoded)
-            if data is not None and isinstance(data, dict):
-                keys = data.keys()
-                if 'action' in keys and 'payload' in keys:
+            if data is not None:
+                try:
                     action = data['action']
                     payload = data['payload']
                     if action == 'connect_client':
-                        if isinstance(payload, dict):
-                            self.handle_cmd_connect_client(payload, address_info)
+                        self.handle_cmd_connect_client(payload, address_info)
+                except KeyError:
+                    pass
 
     def handle_cmd_connect_client(self, payload, address_info):
         if address_info not in self.clientAddresses:

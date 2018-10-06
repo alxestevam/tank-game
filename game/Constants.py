@@ -8,7 +8,7 @@ class Constants:
     TIMEOUT = 2.0
     COMMAND_RATE = 60
     ROOM_CAPACITIES = {'solo': 1, 'duo': 2, 'squad': 4}
-    SCREEN_SIZE = (600, 600)
+    SCREEN_SIZE = (1280, 720)
     TANK_CONFIG = {
         'physics': {
             'turret_width': 20,

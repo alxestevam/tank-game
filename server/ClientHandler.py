@@ -3,8 +3,10 @@ import socket
 import json
 import time
 import queue
+from pygame.time import Clock
 from server.Room import Room
 from game.Constants import Constants
+from server.CommandHandler import CommandHandler
 
 
 class ClientHandler(threading.Thread, socket.socket):
@@ -27,13 +29,11 @@ class ClientHandler(threading.Thread, socket.socket):
         self.cmd_uid_to_client(port)
         self.currentRoom = self.mainRoom
         self.character = None
+        self.clock = Clock()
 
     def run(self):
         update_lobby = threading.Thread(target=self.cmd_update_lobby)
         update_lobby.start()
-
-        handle_commands = threading.Thread(target=self.handle_commands)
-        handle_commands.start()
 
         # TODO: Make the thread stop or decide to use broadcast from Match.py
         world_locations = threading.Thread(target=self.cmd_world_locations)
@@ -41,9 +41,8 @@ class ClientHandler(threading.Thread, socket.socket):
 
         while True:
             data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
-            self.commands.put(data)
-
-            # self.send_world_update()
+            c = CommandHandler(self, data)
+            c.start()
 
     def cmd_world_locations(self):
         while True:
@@ -56,6 +55,7 @@ class ClientHandler(threading.Thread, socket.socket):
                     }
                 }
                 self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
+            self.clock.tick(40)
 
     def cmd_uid_to_client(self, port):
         data = {
@@ -82,40 +82,10 @@ class ClientHandler(threading.Thread, socket.socket):
 
             self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
             # TODO: Verify the need of the delay
-            time.sleep(0)
+            self.clock.tick(30)
 
     def cmd_world_update(self):
         pass
-
-    def handle_commands(self):
-        while True:
-            if not self.commands.empty():
-                data = self.commands.get()
-                if data:
-                    decoded = data.decode('utf-8')
-                    try:
-                        data = json.loads(decoded)
-                    except ValueError as err:
-                        print(err)
-                        raise ValueError('Expecting a JSON string from client, but got something else:', decoded)
-                    if data is not None and isinstance(data, dict):
-                        keys = data.keys()
-                        if 'client_uid' in keys:
-                            if data['client_uid'] == self.uidHex:
-                                if 'action' in keys and 'payload' in keys:
-                                    if isinstance(data['payload'], dict):
-                                        payload_keys = data['payload'].keys()
-                                        action = data['action']
-                                        if action == 'join_room':
-                                            self.handle_cmd_join_room(data, payload_keys)
-                                        if action == 'leave_room':
-                                            self.handle_cmd_leave_room()
-                                        if action == 'toggle_ready':
-                                            self.handle_cmd_toggle_ready()
-                                        if action == 'player_shoot':
-                                            self.handle_cmd_player_shoot(data, payload_keys)
-                                        if action == 'ping':
-                                            pass
 
     def handle_cmd_join_room(self, data, payload_keys):
         if 'room_uid' in payload_keys:
