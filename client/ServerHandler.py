@@ -30,19 +30,28 @@ class ServerHandler(threading.Thread, socket.socket):
     def run(self):
         while self.uidHex is None:
             self.cmd_connect_client()
-            data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
-            self.handle_command(data)
+            try:
+                data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
+                self.handle_command(data)
+            except socket.timeout:
+                pass
 
         while self.matchUid is None:
             self.cmd_update_lobby()
-            data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
-            self.handle_command(data)
+            try:
+                data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
+                self.handle_command(data)
+            except socket.timeout:
+                pass
 
         while self.matchUid is not None:
             self.clock.tick(60)
             self.cmd_update_world(self.gameWindow.controls)
-            data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
-            self.handle_command(data)
+            try:
+                data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
+                self.handle_command(data)
+            except socket.timeout:
+                pass
 
     def cmd_update_lobby(self):
         data = json.dumps({

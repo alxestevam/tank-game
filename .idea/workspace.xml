@@ -2,27 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7dfdb020-3d1d-493d-9f52-4accd25378b3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PKG-00.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/warn-client_start.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/warn-client_start.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/xref-client_start.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/xref-client_start.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/PKG-00.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/warn-server_start.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/warn-server_start.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/xref-server_start.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/xref-server_start.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/client_start.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/client_start.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server_start.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server_start.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/ServerHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/ServerHandler.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -99,14 +79,14 @@
         <counts>
           <entry key="Python Console" value="774" />
           <entry key="dummy" value="31" />
-          <entry key="py" value="32550" />
+          <entry key="py" value="32584" />
           <entry key="txt" value="250" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="281" />
-          <entry key="Python" value="33324" />
+          <entry key="Python" value="33358" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -160,7 +140,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/ClientHandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3236">
+            <state relative-caret-position="166">
               <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
@@ -178,16 +158,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/ServerHandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+            <state relative-caret-position="486">
+              <caret line="53" column="20" selection-start-line="53" selection-start-column="20" selection-end-line="53" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game/Constants.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="243">
@@ -257,10 +237,10 @@
         <option value="$PROJECT_DIR$/client/GameWindow.py" />
         <option value="$PROJECT_DIR$/server_start.py" />
         <option value="$PROJECT_DIR$/client_start.py" />
-        <option value="$PROJECT_DIR$/client/ServerHandler.py" />
         <option value="$PROJECT_DIR$/server/ClientHandler.py" />
         <option value="$PROJECT_DIR$/server/UdpServer.py" />
         <option value="$PROJECT_DIR$/game/Constants.py" />
+        <option value="$PROJECT_DIR$/client/ServerHandler.py" />
       </list>
     </option>
   </component>
@@ -587,7 +567,14 @@
       <option name="project" value="LOCAL" />
       <updated>1538867168299</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Server update">
+      <created>1538868175369</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1538868175369</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TodoView">
@@ -832,27 +819,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/ServerHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server_start.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
           <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/ClientHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3236">
-          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -870,13 +840,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/UdpServer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="25" column="49" selection-start-line="25" selection-start-column="49" selection-end-line="25" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/RoomAnalyzer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -888,6 +851,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
           <caret line="9" column="54" selection-start-line="9" selection-start-column="54" selection-end-line="9" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/UdpServer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="25" column="49" selection-start-line="25" selection-start-column="49" selection-end-line="25" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/ClientHandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/ServerHandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="53" column="20" selection-start-line="53" selection-start-column="20" selection-end-line="53" selection-end-column="20" />
         </state>
       </provider>
     </entry>
