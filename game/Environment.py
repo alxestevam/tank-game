@@ -73,24 +73,29 @@ class Environment(threading.Thread):
 
     @staticmethod
     def controls():
-        cmd = {}
+        data = {
+            'player_move': False,
+            'move_direction': 0,
+            'angle_update': False,
+            'angle_increase': False
+        }
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            cmd['player_move'] = True
-            cmd['move_direction'] = 1
+            data['player_move'] = True
+            data['move_direction'] = 1
         elif keys[pygame.K_RIGHT]:
-            cmd['player_move'] = True
-            cmd['move_direction'] = 2
+            data['player_move'] = True
+            data['move_direction'] = 2
         else:
-            cmd['player_move'] = False
+            data['player_move'] = False
 
         if keys[pygame.K_UP]:
-            cmd['angle_update'] = True
-            cmd['angle_increase'] = True
+            data['angle_update'] = True
+            data['angle_increase'] = True
         elif keys[pygame.K_DOWN]:
-            cmd['angle_update'] = True
-            cmd['angle_increase'] = False
+            data['angle_update'] = True
+            data['angle_increase'] = False
         else:
-            cmd['angle_update'] = False
+            data['angle_update'] = False
 
-        return cmd
+        return data

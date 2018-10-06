@@ -1,7 +1,6 @@
 import threading
 import socket
 import json
-import time
 import queue
 from pygame.time import Clock
 from server.Room import Room
@@ -58,7 +57,7 @@ class ClientHandler(threading.Thread, socket.socket):
                         if action == 'player_shoot':
                             self.handle_cmd_player_shoot(data)
                         if action == 'update_world':
-                            self.handle_cmd_update_world()
+                            self.handle_cmd_update_world(data)
                 except KeyError:
                     pass
 
@@ -71,8 +70,19 @@ class ClientHandler(threading.Thread, socket.socket):
 
         self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
 
-    def handle_cmd_update_world(self):
+    def handle_cmd_update_world(self, data):
         if self.match is not None:
+            try:
+                controls = data['controls']
+
+                if controls['angle_update']:
+                    self.character.tank.update_angle(controls['angle_increase'])
+                if controls['player_move']:
+                    self.character.tank.move(controls['move_direction'])
+                else:
+                    self.character.tank.stop()
+            except KeyError:
+                pass
             data = {
                 'client_uid': self.uidHex,
                 'action': 'world_locations',

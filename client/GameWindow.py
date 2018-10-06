@@ -36,6 +36,7 @@ class GameWindow(threading.Thread):
         self.max_charge = 200
         self.charging = False
         self.shoot = True
+        self.controls = None
 
     def run(self):
         # Initializing the game
@@ -59,6 +60,8 @@ class GameWindow(threading.Thread):
                     obj.update()
 
             cmd = self.env.get_local_user_input()
+            self.controls = self.env.controls()
+
             if cmd == 0:
                 self.isRunning = False
                 break
@@ -135,6 +138,13 @@ class GameWindow(threading.Thread):
                     entity.body.linearVelocity = linear_velocity
                     entity.body.localCenter = local_center
                     # obj.body.mass = mass
+                if isinstance(entity, Tank):
+                    aim_angle = obj['aimAngle']
+                    direction = obj['direction']
+                    gun_barrel_distance = b2Vec2(obj['gunBarrelDistance']['__value__'])
+                    entity.angle = aim_angle
+                    entity.gunBarrelDistance = gun_barrel_distance
+                    entity.direction = direction
 
     def destroy_world_object(self):
         pass

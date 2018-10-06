@@ -8,7 +8,6 @@ import pygame
 import uuid
 import Box2D
 from game.Constants import Constants
-from game.Sprite import Sprite
 
 
 class Match(Environment):
@@ -37,7 +36,6 @@ class Match(Environment):
         vel_iter, pos_iter = 10, 10
         run = True
         clock = pygame.time.Clock()
-        print('initializing')
         time = 0
         while run:
             dt_s = float(clock.tick(Constants.FPS)) * 1e-3
@@ -88,7 +86,10 @@ class Match(Environment):
                     'linearDamping': obj.body.linearDamping,
                     'linearVelocity': self.to_json(obj.body.linearVelocity),
                     'localCenter': self.to_json(obj.body.localCenter),
-                    'mass': obj.body.mass
+                    'mass': obj.body.mass,
+                    'gunBarrelDistance': self.to_json(obj.gunBarrelDistance),
+                    'aimAngle': obj.angle,
+                    'direction': obj.direction
                 }
 
         return data

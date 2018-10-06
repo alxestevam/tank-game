@@ -4,8 +4,7 @@ from client.ServerHandler import ServerHandler
 def test_menu(server_handler):
     op = 0
     while op != 7:
-        op = int(input("----------------------------\n"
-                       "[1] Print Current Room uid\n"
+        op = int(input("[1] Print Current Room uid\n"
                        "[2] Print Main Room Uid\n"
                        "[3] Join room\n"
                        "[4] Leave room\n"
@@ -31,6 +30,14 @@ def test_menu(server_handler):
                 print('Not ready.')
 
 
-client = ServerHandler(('127.0.0.1', 10939))
+ip = input('IP: (Default = 127.0.0.1)')
+port = input('Port: (Default = 5000)')
+
+if ip == '':
+    ip = '127.0.0.1'
+if port == '':
+    port = 5000
+
+client = ServerHandler((ip, port))
 client.start()
 test_menu(client)

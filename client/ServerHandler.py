@@ -40,7 +40,7 @@ class ServerHandler(threading.Thread, socket.socket):
 
         while self.matchUid is not None:
             self.clock.tick(60)
-            self.cmd_update_world()
+            self.cmd_update_world(self.gameWindow.controls)
             data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
             self.handle_command(data)
 
@@ -51,12 +51,20 @@ class ServerHandler(threading.Thread, socket.socket):
         }).encode('utf-8')
         self.sendto(data, self.server_address)
 
-    def cmd_update_world(self):
-        data = json.dumps({
+    def cmd_update_world(self, controls):
+        data = {
             'client_uid': self.uidHex,
             'action': 'update_world'
-        }).encode('utf-8')
-        self.sendto(data, self.server_address)
+        }
+
+        if controls is not None:
+            data['controls'] = dict()
+            data['controls']['player_move'] = controls['player_move']
+            data['controls']['move_direction'] = controls['move_direction']
+            data['controls']['angle_update'] = controls['angle_update']
+            data['controls']['angle_increase'] = controls['angle_increase']
+
+        self.sendto(json.dumps(data).encode('utf-8'), self.server_address)
 
     def cmd_connect_client(self):
         data = json.dumps({

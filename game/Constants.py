@@ -4,7 +4,7 @@ from Box2D import b2Vec2
 class Constants:
     FPS = 60
     BUFFER_SIZE = 4096*10
-    DEFAULT_PORT = 10939
+    DEFAULT_PORT = 5000
     TIMEOUT = 2.0
     COMMAND_RATE = 60
     ROOM_CAPACITIES = {'solo': 1, 'duo': 2, 'squad': 4}
