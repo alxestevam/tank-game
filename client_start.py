@@ -31,12 +31,12 @@ def test_menu(server_handler):
 
 
 ip = input('IP: (Default = 127.0.0.1)')
-port = input('Port: (Default = 5000)')
+port = input('Port: (Default = 10939)')
 
 if ip == '':
     ip = '127.0.0.1'
 if port == '':
-    port = 5000
+    port = 10939
 
 client = ServerHandler((ip, port))
 client.start()

@@ -15,7 +15,7 @@ class ServerHandler(threading.Thread, socket.socket):
         socket.socket.__init__(self, type=socket.SOCK_DGRAM)
         self.settimeout(2)
         self.setDaemon(True)
-        self.bind(('localhost', random.randint(10000, 20000)))
+        self.bind(('', random.randint(10000, 20000)))
         self.server_address = server_address
         self.uidHex = None
         self.commands = queue.Queue()

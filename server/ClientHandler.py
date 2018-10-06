@@ -12,7 +12,7 @@ class ClientHandler(threading.Thread, socket.socket):
         threading.Thread.__init__(self, name='Client Handler Thread')
         socket.socket.__init__(self, type=socket.SOCK_DGRAM)
         # TODO: Configure the timeout
-        self.settimeout(2)
+        self.settimeout(None)
         self.bind(('', port))
         self.setDaemon(True)
         self.server = udp_server
