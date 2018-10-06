@@ -15,7 +15,8 @@ class ServerHandler(threading.Thread, socket.socket):
         socket.socket.__init__(self, type=socket.SOCK_DGRAM)
         self.settimeout(2)
         self.setDaemon(True)
-        self.bind(('localhost', random.randint(10000, 20000)))
+        #self.bind(('25.9.251.248', random.randint(10000, 20000)))
+        self.bind(('25.9.251.248', 10939))
         self.server_address = server_address
         self.uidHex = None
         self.commands = queue.Queue()
@@ -30,19 +31,28 @@ class ServerHandler(threading.Thread, socket.socket):
     def run(self):
         while self.uidHex is None:
             self.cmd_connect_client()
-            data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
-            self.handle_command(data)
+            try:
+                data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
+                self.handle_command(data)
+            except socket.timeout:
+                pass
 
         while self.matchUid is None:
             self.cmd_update_lobby()
-            data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
-            self.handle_command(data)
+            try:
+                data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
+                self.handle_command(data)
+            except socket.timeout:
+                pass
 
         while self.matchUid is not None:
             self.clock.tick(60)
             self.cmd_update_world(self.gameWindow.controls)
-            data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
-            self.handle_command(data)
+            try:
+                data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
+                self.handle_command(data)
+            except socket.timeout:
+                pass
 
     def cmd_update_lobby(self):
         data = json.dumps({
@@ -232,7 +242,7 @@ def test_menu(server_handler):
 
 
 if __name__ == '__main__':
-    client = ServerHandler(('127.0.0.1', 10939))
+    client = ServerHandler(('25.10.17.157', 10939))
     client.start()
     test_menu(client)
 
