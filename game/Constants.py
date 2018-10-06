@@ -30,7 +30,7 @@ class Constants:
     }
     TERRAIN_CONFIG = {
         '1': {
-            'vertices': [b2Vec2(0, 0), b2Vec2(150, 0), b2Vec2(150, 20), b2Vec2(100, 20), b2Vec2(0, 20)],
+            'vertices': [[0, 0], [150, 0], [150, 20], [100, 20], [0, 20]],
             'sprite_image': None
         }
     }

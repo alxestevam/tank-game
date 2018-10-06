@@ -2,8 +2,8 @@ from game.Entity import Entity
 from Box2D import *
 import pygame
 import pyclipper
-import queue
-
+from queue import Queue
+from game.Constants import Constants
 
 
 class Terrain(Entity):
@@ -12,14 +12,12 @@ class Terrain(Entity):
         super(Terrain, self).__init__(env, env.world.CreateStaticBody(position=(0, 0), userData=self), uid)
         self.env = env
         self.color = color
-        default = [b2Vec2(0, 0), b2Vec2(150, 0), b2Vec2(150, 20), b2Vec2(100, 20), b2Vec2(0, 20)]
+        default = Constants.TERRAIN_CONFIG['1']['vertices']
         vertices = vertices if vertices is not None else default
         chain_shape = b2ChainShape(vertices=vertices)
         fixture_def = b2FixtureDef(shape=chain_shape, density=1, friction=5, restitution=0)
         self.body.CreateFixture(fixture_def)
-        self.nextDestructionRadius = 0
-        self.nextDestructionPosition = b2Vec2(0, 0)
-        self.destructionQueue = queue.Queue()
+        self.destructionQueue = Queue()
 
     def show(self, win):
         for fixtures in self.body.fixtures:
@@ -56,3 +54,4 @@ class Terrain(Entity):
             for vertices in clipped:
                 chain_shape = b2ChainShape(vertices=vertices)
                 self.body.CreateFixture(shape=chain_shape)
+

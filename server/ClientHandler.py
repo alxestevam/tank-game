@@ -6,7 +6,6 @@ import queue
 from pygame.time import Clock
 from server.Room import Room
 from game.Constants import Constants
-from server.CommandHandler import CommandHandler
 
 
 class ClientHandler(threading.Thread, socket.socket):
@@ -32,63 +31,76 @@ class ClientHandler(threading.Thread, socket.socket):
         self.clock = Clock()
 
     def run(self):
-        update_lobby = threading.Thread(target=self.cmd_update_lobby)
-        update_lobby.start()
-
-        # TODO: Make the thread stop or decide to use broadcast from Match.py
-        world_locations = threading.Thread(target=self.cmd_world_locations)
-        world_locations.start()
-
         while True:
             data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
-            c = CommandHandler(self, data)
-            c.start()
+            self.handle_command(data)
 
-    def cmd_world_locations(self):
-        while True:
-            if self.match is not None:
-                data = {
-                    'client_uid': self.uidHex,
-                    'action': 'world_locations',
-                    'payload': {
-                        'locations': self.match.world_locations()
-                    }
-                }
-                self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
-            self.clock.tick(40)
+    def handle_command(self, data):
+        if data:
+            decoded = data.decode('utf-8')
+            try:
+                data = json.loads(decoded)
+            except ValueError as err:
+                print(err)
+                raise ValueError('Expecting a JSON string from client, but got something else:', decoded)
+            if data is not None:
+                try:
+                    if data['client_uid'] == self.uidHex:
+                        action = data['action']
+                        if action == 'update_lobby':
+                            self.handle_cmd_update_lobby()
+                        if action == 'join_room':
+                            self.handle_cmd_join_room(data)
+                        if action == 'leave_room':
+                            self.handle_cmd_leave_room()
+                        if action == 'toggle_ready':
+                            self.handle_cmd_toggle_ready()
+                        if action == 'player_shoot':
+                            self.handle_cmd_player_shoot(data)
+                        if action == 'update_world':
+                            self.handle_cmd_update_world()
+                except KeyError:
+                    pass
 
     def cmd_uid_to_client(self, port):
         data = {
+            'client_uid' : self.uidHex,
             'action': 'uid_to_client',
             'payload': {'uid_hex': self.uidHex, 'port': port, 'room_uid': self.mainRoom.uidHex}
         }
 
         self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
 
-    def cmd_update_lobby(self):
-        while True:
+    def handle_cmd_update_world(self):
+        if self.match is not None:
             data = {
                 'client_uid': self.uidHex,
-                'action': 'update_lobby',
+                'action': 'world_locations',
                 'payload': {
-                    'room_uid': self.currentRoom.uidHex,
-                    'ready': self.ready
+                    'locations': self.match.world_locations()
                 }
             }
-            if self.match is None:
-                data['payload']['match'] = None
-            else:
-                data['payload']['match'] = self.match.uidHex
-
             self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
-            # TODO: Verify the need of the delay
-            self.clock.tick(30)
 
-    def cmd_world_update(self):
-        pass
+    def handle_cmd_update_lobby(self):
+        data = {
+            'client_uid': self.uidHex,
+            'action': 'update_lobby',
+            'payload': {
+                'room_uid': self.currentRoom.uidHex,
+                'ready': self.ready
+            }
+        }
 
-    def handle_cmd_join_room(self, data, payload_keys):
-        if 'room_uid' in payload_keys:
+        if self.match is None:
+            data['payload']['match'] = None
+        else:
+            data['payload']['match'] = self.match.uidHex
+
+        self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
+
+    def handle_cmd_join_room(self, data):
+        try:
             room_uid = data['payload']['room_uid']
             if self.currentRoom.uidHex != room_uid:
                 room = self.server.player_join_room(room_uid, self)
@@ -98,6 +110,8 @@ class ClientHandler(threading.Thread, socket.socket):
                     self.currentRoom = room
                 else:
                     print('Room invalid or full')
+        except KeyError:
+            print(KeyError)
 
     def handle_cmd_leave_room(self):
         if self.currentRoom != self.mainRoom:
@@ -112,19 +126,15 @@ class ClientHandler(threading.Thread, socket.socket):
             }
             self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
 
-    def handle_cmd_player_shoot(self, data, payload_keys):
+    def handle_cmd_player_shoot(self, data):
         # TODO: Make this better
         if self.match is not None and self.character is not None:
-            if 'energy' in payload_keys:
+            try:
                 energy = data['payload']['energy']
                 self.character.shoot(energy)
+            except KeyError:
+                print(KeyError)
 
     def handle_cmd_toggle_ready(self):
         self.ready = not self.ready
         self.currentRoom.ready_verifier()
-
-    def move_char(self):
-        pass
-
-    def shot(self, charge):
-        pass

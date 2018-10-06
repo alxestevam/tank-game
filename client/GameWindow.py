@@ -52,8 +52,6 @@ class GameWindow(threading.Thread):
             self.env.world.Step(self.timeStep, self.vel_iter, self.pos_iter)
             self.win.fill(THECOLORS['white'])
 
-            # print(self.env.objects)
-
             for uid, obj in self.env.objects.copy().items():
                 if isinstance(obj, Sprite):
                     obj.show(self.win)
@@ -83,19 +81,19 @@ class GameWindow(threading.Thread):
         pygame.quit()
 
     def create_world_obj(self, uid, obj):
-        # TODO: Verify if every item exists in the dict (if 'item' in dict key)
+        # TODO: Apply try exception
         cls_name = obj['__class__']
         if cls_name == 'Terrain':
-            print('Creating terrain')
             terrain = Terrain(self.env, uid=uid)
-            """
+            vertices_list = obj['vertices_list']
+
             for f in terrain.body.fixtures:
                 terrain.body.DestroyFixture(f)
 
-            for vertices in obj['vertices_list']:
+            for vertices in vertices_list:
+                del vertices[-1]
                 chain_shape = b2ChainShape(vertices=vertices)
                 terrain.body.CreateFixture(shape=chain_shape)
-            """
         elif cls_name == 'Tank':
             position = b2Vec2(obj['position']['__value__'])
             Tank(self.env, position, uid=uid)
@@ -106,39 +104,37 @@ class GameWindow(threading.Thread):
             Bullet(self.env, position, radius=radius, bullet_type=bullet_type, uid=uid)
 
     def update_world_obj(self, uid, obj):
-        cls_name = obj['__class__']
+        # TODO: Apply try exception
         for uidHex, entity in self.env.objects.copy().items():
-            if isinstance(entity, Entity):
-                if uidHex == uid:
-                    if cls_name == 'Terrain':
-                        """
-                        for f in entity.body.fixtures:
-                            entity.body.DestroyFixture(f)
+            if uidHex == uid:
+                if isinstance(entity, Terrain):
+                    vertices_list = obj['vertices_list']
+                    for f in entity.body.fixtures:
+                        entity.body.DestroyFixture(f)
 
-                        for vertices in obj['vertices_list']:
-                            chain_shape = b2ChainShape(vertices=vertices)
-                            entity.body.CreateFixture(shape=chain_shape)
-                            
-                        """
-                    if cls_name == 'Tank' or cls_name == 'Bullet':
-                        position = b2Vec2(obj['position']['__value__'])
-                        angle = obj['angle']
-                        angular_damping = obj['angularDamping']
-                        angular_velocity = obj['angularVelocity']
-                        inertia = obj['inertia']
-                        linear_damping = obj['linearDamping']
-                        linear_velocity = b2Vec2(obj['linearVelocity']['__value__'])
-                        local_center = b2Vec2(obj['localCenter']['__value__'])
-                        # mass = obj['mass']
-                        entity.body.position = position
-                        entity.body.angle = angle
-                        entity.body.angularDamping = angular_damping
-                        entity.body.angularVelocity = angular_velocity
-                        entity.body.inertia = inertia
-                        entity.body.linearDamping = linear_damping
-                        entity.body.linearVelocity = linear_velocity
-                        entity.body.localCenter = local_center
-                        # obj.body.mass = mass
+                    for vertices in vertices_list:
+                        del vertices[-1]
+                        chain_shape = b2ChainShape(vertices=vertices)
+                        entity.body.CreateFixture(shape=chain_shape)
+                elif isinstance(entity, Entity):
+                    position = b2Vec2(obj['position']['__value__'])
+                    angle = obj['angle']
+                    angular_damping = obj['angularDamping']
+                    angular_velocity = obj['angularVelocity']
+                    inertia = obj['inertia']
+                    linear_damping = obj['linearDamping']
+                    linear_velocity = b2Vec2(obj['linearVelocity']['__value__'])
+                    local_center = b2Vec2(obj['localCenter']['__value__'])
+                    # mass = obj['mass']
+                    entity.body.position = position
+                    entity.body.angle = angle
+                    entity.body.angularDamping = angular_damping
+                    entity.body.angularVelocity = angular_velocity
+                    entity.body.inertia = inertia
+                    entity.body.linearDamping = linear_damping
+                    entity.body.linearVelocity = linear_velocity
+                    entity.body.localCenter = local_center
+                    # obj.body.mass = mass
 
     def destroy_world_object(self):
         pass
