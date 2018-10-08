@@ -15,6 +15,7 @@ class UdpServer(threading.Thread, socket.socket):
         threading.Thread.__init__(self, name='UdpServer Thread')
         socket.socket.__init__(self, type=socket.SOCK_DGRAM)
         self.port = Constants.DEFAULT_PORT if port is None else port
+        self.player_limit = Constants.SERVER_PLAYER_LIMIT
         self.bind(('', self.port))
         self.clients = []
         self.clientAddresses = {}
@@ -29,6 +30,8 @@ class UdpServer(threading.Thread, socket.socket):
                               'squad': {}}
         self.matches = []
         self.analyzer = RoomAnalyzer(self)
+        self.clientIpList = list(range(Constants.DEFAULT_PORT + 1, Constants.DEFAULT_PORT
+                                       + Constants.SERVER_PLAYER_LIMIT))
 
     def run(self):
         print('Hosting at', self.getsockname())
@@ -68,9 +71,10 @@ class UdpServer(threading.Thread, socket.socket):
             self.clients.append(address_info)
             self.clientCounter += 1
             # Create ClientHandler
-            uid_hex = uuid.uuid4().hex  # New uid for each user
-            ch = ClientHandler(self, uid_hex, address_info, self.port + self.clientCounter, client_info)
-            self.clientAddresses[address_info] = uid_hex
+            port = self.clientIpList[0]
+            del self.clientIpList[0]
+            ch = ClientHandler(self, address_info, port, client_info)
+            self.clientAddresses[address_info] = ch.uidHex
             ch.start()
 
     def create_room(self, client_handler, client_info):
@@ -94,7 +98,7 @@ class UdpServer(threading.Thread, socket.socket):
         # This is a example of what type of dict this function has to return
         info = {
             'currentLevel': 10,
-            'lastRoomType': 'solo',
+            'lastRoomType': 'duo',
             'playerNumber': 1,
             'currentSkin': 1
         }

@@ -3,6 +3,7 @@ from Box2D import b2Vec2
 
 class Constants:
     FPS = 60
+    SERVER_PLAYER_LIMIT = 100
     BUFFER_SIZE = 4096*10
     DEFAULT_PORT = 10939
     TIMEOUT = 2.0

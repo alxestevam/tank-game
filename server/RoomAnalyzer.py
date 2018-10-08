@@ -8,32 +8,21 @@ class RoomAnalyzer(Thread):
         self.server = server
         self.setDaemon(True)
 
+        self.rooms = {
+            'solo': [],
+            'duo': [],
+            'squad': []
+        }
+
     def run(self):
-        solo_rooms = []
-        duo_rooms = []
-        squad_rooms = []
         while True:
-            if not self.server.readyRooms['solo'].empty() and len(solo_rooms) < 2:
-                print('Matching room...')
-                solo_rooms.append(self.server.readyRooms['solo'].get())
-                print(solo_rooms)
-            if not self.server.readyRooms['duo'].empty() and len(duo_rooms) < 2:
-                solo_rooms.append(self.server.readyRooms['duo'].get())
-            if not self.server.readyRooms['squad'].empty() and len(squad_rooms) < 2:
-                solo_rooms.append(self.server.readyRooms['squad'].get())
-            if len(solo_rooms) == 2:
-                print('New Match!', solo_rooms)
-                match = Match(self, solo_rooms)
-                match.start()
-                self.server.matches.append(match)
-                solo_rooms = []
-            if len(duo_rooms) == 2:
-                match = Match(self, duo_rooms)
-                match.start()
-                self.server.matches.append(match)
-                duo_rooms = []
-            if len(squad_rooms) == 2:
-                match = Match(self, squad_rooms)
-                match.start()
-                self.server.matches.append(match)
-                squad_rooms = []
+            for type_room, list_room in self.rooms.items():
+                if len(list_room) < 2 and not self.server.readyRooms[type_room].empty():
+                    room = self.server.readyRooms[type_room].get()
+                    if room.isActive:
+                        self.rooms[type_room].append(room)
+                if len(list_room) == 2:
+                    match = Match(self.server, self.rooms[type_room])
+                    match.start()
+                    self.server.matches.append(match)
+                    self.rooms[type_room] = []

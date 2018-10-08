@@ -2,17 +2,19 @@ import threading
 import socket
 import json
 import queue
+from uuid import uuid4
 from pygame.time import Clock
 from server.Room import Room
 from game.Constants import Constants
 
 
 class ClientHandler(threading.Thread, socket.socket):
-    def __init__(self, udp_server, uid_hex, client_address, port, client_info):
+    def __init__(self, udp_server, client_address, port, client_info):
         threading.Thread.__init__(self, name='Client Handler Thread')
         socket.socket.__init__(self, type=socket.SOCK_DGRAM)
         # TODO: Configure the timeout
-        self.settimeout(None)
+        self.settimeout(10)
+        self.port = port
         self.bind(('', port))
         self.setDaemon(True)
         self.server = udp_server
@@ -20,7 +22,7 @@ class ClientHandler(threading.Thread, socket.socket):
         self.clientInfo = client_info
         self.ready = False
         self.match = None
-        self.uidHex = uid_hex
+        self.uidHex = uuid4().hex
         self.commands = queue.Queue()
 
         self.mainRoom = Room(udp_server, self, client_info['lastRoomType'])
@@ -28,11 +30,19 @@ class ClientHandler(threading.Thread, socket.socket):
         self.currentRoom = self.mainRoom
         self.character = None
         self.clock = Clock()
+        self.connected = True
 
     def run(self):
-        while True:
-            data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
-            self.handle_command(data)
+        while self.connected:
+            try:
+                data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
+                self.handle_command(data)
+            except socket.timeout:
+                print('Client disconnected:', self.clientAddress)
+                self.connected = False
+                self.server.clientIpList.append(self.port)
+                self.mainRoom.delete_room()
+                self.currentRoom.delete_player(self.uidHex)
 
     def handle_command(self, data):
         if data:
@@ -63,7 +73,7 @@ class ClientHandler(threading.Thread, socket.socket):
 
     def cmd_uid_to_client(self, port):
         data = {
-            'client_uid' : self.uidHex,
+            'client_uid': self.uidHex,
             'action': 'uid_to_client',
             'payload': {'uid_hex': self.uidHex, 'port': port, 'room_uid': self.mainRoom.uidHex}
         }
