@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dfdb020-3d1d-493d-9f52-4accd25378b3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/build/client_start/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PKG-00.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/warn-client_start.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/warn-client_start.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/xref-client_start.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/xref-client_start.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_start.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_start.py" afterDir="false" />
-    </list>
+    <list default="true" id="7dfdb020-3d1d-493d-9f52-4accd25378b3" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -647,7 +638,14 @@
       <option name="project" value="LOCAL" />
       <updated>1539078617710</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Server and Client Update, Player Health and Simple GUI">
+      <created>1539078872270</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1539078872270</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView">
