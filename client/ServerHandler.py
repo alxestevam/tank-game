@@ -7,6 +7,7 @@ import queue
 from pygame.time import Clock
 from game.Constants import Constants
 from client.GameWindow import GameWindow
+from client.LobbyScreen import LobbyScreen
 
 
 class ServerHandler(threading.Thread, socket.socket):
@@ -36,6 +37,9 @@ class ServerHandler(threading.Thread, socket.socket):
             except socket.timeout:
                 pass
 
+        lobby_screen = LobbyScreen(self)
+        lobby_screen.start()
+
         while self.matchUid is None:
             self.cmd_update_lobby()
             try:
@@ -43,6 +47,9 @@ class ServerHandler(threading.Thread, socket.socket):
                 self.handle_command(data)
             except socket.timeout:
                 pass
+
+        # lobby_screen.win.destroy()
+        # lobby_screen.join()
 
         while self.matchUid is not None:
             self.clock.tick(60)
@@ -243,6 +250,7 @@ def test_menu(server_handler):
 if __name__ == '__main__':
     client = ServerHandler(('127.0.0.1', 10939))
     client.start()
-    test_menu(client)
+    client.join()
+    # test_menu(client)
 
 

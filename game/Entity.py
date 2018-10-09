@@ -1,5 +1,6 @@
 from game.Sprite import Sprite
 import uuid
+from abc import abstractmethod
 
 
 class Entity(Sprite):
@@ -7,3 +8,7 @@ class Entity(Sprite):
         self.uidHex = uid if uid is not None else uuid.uuid4().hex
         self.body = body
         env.objects[self.uidHex] = self
+
+    @abstractmethod
+    def update(self):
+        pass

@@ -4,14 +4,14 @@ import pygame
 from math import sin, cos
 from game.Entity import Entity
 from game.Constants import Constants
-
+from pygame.color import THECOLORS
 
 class Tank(Entity):
     # TODO: Put sprite image at constructor
     def __init__(self, env, pos, color=(0, 0, 0), uid=None):
         # pos = env.convert_screen_to_world(pos[0], pos[1])
         pos = b2Vec2(pos)
-        super(Tank, self).__init__(env, env.world.CreateDynamicBody(position=pos), uid)
+        super(Tank, self).__init__(env, env.world.CreateDynamicBody(position=pos, userData=self), uid)
 
         self.angleArcDistance = Constants.TANK_CONFIG['physics']['angle_arc_distance']
         self.env = env
@@ -26,6 +26,10 @@ class Tank(Entity):
         # TODO: Apply radius variation with the card mechanics
         self.bullet_radius = 10
         self.direction = 1
+        self.removeGravity = False
+        self.normalBodyWithTerrain = b2Vec2(0, 0)
+        self.health = Constants.TANK_CONFIG['max_health']
+        self.healthBarRedColor = 0
 
         wheel_distance_m = self.env.m_from_px(Constants.TANK_CONFIG['physics']['wheel_distance_px'])
 
@@ -44,7 +48,7 @@ class Tank(Entity):
 
         x = [-wheel_distance_m/2, wheel_distance_m]
         for x_p in x:
-            wheel = env.world.CreateDynamicBody(position=(pos.x + x_p, pos.y - offset_y))
+            wheel = env.world.CreateDynamicBody(position=(pos.x + x_p, pos.y - offset_y), userData=self)
             circle = b2CircleShape(radius=self.env.m_from_px(self.wheelRadius))
             fixture_def = b2FixtureDef(shape=circle,
                                        density=Constants.TANK_CONFIG['physics']['wheel_density'],
@@ -123,8 +127,33 @@ class Tank(Entity):
         # Draw the current angle
         pygame.draw.line(win, (255, 0, 0), point1, point2)
 
+    def take_damage(self, damage):
+        if self.health - damage <= 0:
+            self.health = 0
+        else:
+            self.health -= damage
+
+    def draw_health_bar(self, win):
+        size = 100
+        ini_position = b2Vec2(self.env.convert_world_to_screen(self.body.position)) - b2Vec2(70, 100)
+        pygame.draw.rect(win, (self.translate(self.health, 0, 100, 255, 0), 0, self.translate(self.health, 0, 100, 0, 255)),
+                         (ini_position.x, ini_position.y, self.health/Constants.TANK_CONFIG['max_health'] * size, 20))
+
+    @staticmethod
+    def translate(value, left_min, left_max, right_min, right_max):
+        # Figure out how 'wide' each range is
+        left_span = left_max - left_min
+        right_span = right_max - right_min
+
+        # Convert the left range into a 0-1 range (float)
+        value_scaled = float(value - left_min) / float(left_span)
+
+        # Convert the 0-1 range into a value in the right range.
+        return right_min + (value_scaled * right_span)
+
     def show(self, win):
         self.draw_angle_arc(win)
+        self.draw_health_bar(win)
         for fixtures in self.body.fixtures:
             shape = fixtures.shape
             vertices_screen = []

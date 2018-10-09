@@ -113,7 +113,10 @@ class GameWindow(threading.Thread):
                 if isinstance(entity, Terrain):
                     vertices_list = obj['vertices_list']
                     for f in entity.body.fixtures:
-                        entity.body.DestroyFixture(f)
+                        try:
+                            entity.body.DestroyFixture(f)
+                        except AssertionError:
+                            pass
 
                     for vertices in vertices_list:
                         del vertices[-1]
@@ -141,10 +144,12 @@ class GameWindow(threading.Thread):
                 if isinstance(entity, Tank):
                     aim_angle = obj['aimAngle']
                     direction = obj['direction']
+                    health = obj['health']
                     gun_barrel_distance = b2Vec2(obj['gunBarrelDistance']['__value__'])
                     entity.angle = aim_angle
                     entity.gunBarrelDistance = gun_barrel_distance
                     entity.direction = direction
+                    entity.health = health
 
     def destroy_world_object(self):
         pass
