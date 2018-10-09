@@ -8,6 +8,7 @@ import pygame
 import uuid
 import Box2D
 from game.Constants import Constants
+from game.Entity import Entity
 
 
 class Match(Environment):
@@ -42,7 +43,7 @@ class Match(Environment):
             self.world.Step(time_step, vel_iter, pos_iter)
 
             for uid, obj in self.objects.copy().items():
-                if isinstance(obj, Terrain) or isinstance(obj, Bullet):
+                if isinstance(obj, Entity):
                     obj.update()
 
             time += dt_s
@@ -89,7 +90,8 @@ class Match(Environment):
                     'mass': obj.body.mass,
                     'gunBarrelDistance': self.to_json(obj.gunBarrelDistance),
                     'aimAngle': obj.angle,
-                    'direction': obj.direction
+                    'direction': obj.direction,
+                    'health': obj.health
                 }
 
         return data

@@ -98,7 +98,7 @@ class UdpServer(threading.Thread, socket.socket):
         # This is a example of what type of dict this function has to return
         info = {
             'currentLevel': 10,
-            'lastRoomType': 'duo',
+            'lastRoomType': 'solo',
             'playerNumber': 1,
             'currentSkin': 1
         }

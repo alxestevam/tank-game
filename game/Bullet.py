@@ -16,6 +16,7 @@ class Bullet(Entity):
         # TODO: Implement different types and explosion_radius
         self.bullet_type = bullet_type
         self.explosion_radius = 50
+        self.damage = 10
 
     def apply_impulse(self, force):
         self.body.ApplyLinearImpulse(force, self.body.position, True)

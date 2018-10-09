@@ -1,6 +1,3 @@
-from Box2D import b2Vec2
-
-
 class Constants:
     FPS = 60
     SERVER_PLAYER_LIMIT = 100
@@ -11,6 +8,7 @@ class Constants:
     ROOM_CAPACITIES = {'solo': 1, 'duo': 2, 'squad': 4}
     SCREEN_SIZE = (1280, 720)
     TANK_CONFIG = {
+        'max_health': 100,
         'physics': {
             'turret_width': 20,
             'turret_height': 20,
