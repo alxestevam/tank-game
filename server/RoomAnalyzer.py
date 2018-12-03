@@ -22,7 +22,8 @@ class RoomAnalyzer(Thread):
                     if room.isActive:
                         self.rooms[type_room].append(room)
                 if len(list_room) == 2:
-                    match = Match(self.server, self.rooms[type_room])
-                    match.start()
-                    self.server.matches.append(match)
+                    if self.rooms[type_room][0] != self.rooms[type_room][1]:
+                        match = Match(self.server, self.rooms[type_room])
+                        match.start()
+                        self.server.matches.append(match)
                     self.rooms[type_room] = []

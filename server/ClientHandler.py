@@ -40,9 +40,13 @@ class ClientHandler(threading.Thread, socket.socket):
             except socket.timeout:
                 print('Client disconnected:', self.clientAddress)
                 self.connected = False
+                if self.character is not None:
+                    self.character.tank.health = 0
                 self.server.clientIpList.append(self.port)
                 self.mainRoom.delete_room()
                 self.currentRoom.delete_player(self.uidHex)
+            except Exception:
+                pass
 
     def handle_command(self, data):
         if data:
@@ -97,9 +101,17 @@ class ClientHandler(threading.Thread, socket.socket):
                 'client_uid': self.uidHex,
                 'action': 'world_locations',
                 'payload': {
-                    'locations': self.match.world_locations()
+                    'locations': self.match.world_locations(),
+                    'room_uid': self.currentRoom.uidHex,
+                    'ready': self.ready
                 }
             }
+
+            if self.match is None:
+                data['payload']['match'] = None
+            else:
+                data['payload']['match'] = self.match.uidHex
+
             self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
 
     def handle_cmd_update_lobby(self):

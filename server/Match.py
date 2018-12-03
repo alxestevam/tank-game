@@ -33,7 +33,7 @@ class Match(Environment):
             team += 1
 
     def run(self):
-        time_step = 1.0 / Constants.FPS
+        time_step = 1.0 / Constants.FPS*1.5
         vel_iter, pos_iter = 10, 10
         run = True
         clock = pygame.time.Clock()
@@ -45,6 +45,17 @@ class Match(Environment):
             for uid, obj in self.objects.copy().items():
                 if isinstance(obj, Entity):
                     obj.update()
+
+            for char in self.characters.values():
+                if char is not None:
+                    if char.tank.health <= 0:
+                        run = False
+                        for room in self.rooms:
+                            for player in room.players.values():
+                                player.match = None
+                                player.ready = False
+                                player.character = None
+                        # TODO: show the winner
 
             time += dt_s
 

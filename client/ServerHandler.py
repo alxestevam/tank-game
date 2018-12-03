@@ -34,31 +34,32 @@ class ServerHandler(threading.Thread, socket.socket):
             try:
                 data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
                 self.handle_command(data)
-            except socket.timeout:
+            except Exception:
                 pass
 
         lobby_screen = LobbyScreen(self)
         lobby_screen.start()
+        while True:
 
-        while self.matchUid is None:
-            self.cmd_update_lobby()
-            try:
-                data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
-                self.handle_command(data)
-            except socket.timeout:
-                pass
+            while self.matchUid is None:
+                self.cmd_update_lobby()
+                try:
+                    data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
+                    self.handle_command(data)
+                except Exception:
+                    pass
 
-        # lobby_screen.win.destroy()
-        # lobby_screen.join()
+            # lobby_screen.win.destroy()
+            # lobby_screen.join()
 
-        while self.matchUid is not None:
-            self.clock.tick(60)
-            self.cmd_update_world(self.gameWindow.controls)
-            try:
-                data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
-                self.handle_command(data)
-            except socket.timeout:
-                pass
+            while self.matchUid is not None:
+                self.clock.tick(60)
+                self.cmd_update_world(self.gameWindow.controls)
+                try:
+                    data, address_info = self.recvfrom(Constants.BUFFER_SIZE)
+                    self.handle_command(data)
+                except Exception:
+                    pass
 
     def cmd_update_lobby(self):
         data = json.dumps({
@@ -200,6 +201,7 @@ class ServerHandler(threading.Thread, socket.socket):
                 self.matchUid = None
 
     def handle_cmd_world_locations(self, data):
+        self.handle_cmd_update_lobby(data)
         if self.matchUid is not None:
             try:
                 locations = data['payload']['locations']
