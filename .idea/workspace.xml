@@ -1,40 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dfdb020-3d1d-493d-9f52-4accd25378b3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PKG-00.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/warn-client_start.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/warn-client_start.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client_start/xref-client_start.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/xref-client_start.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/PKG-00.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/warn-server_start.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/warn-server_start.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server_start/xref-server_start.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/xref-server_start.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/GameWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/GameWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/ServerHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/ServerHandler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_start.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_start.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_start.spec" beforeDir="false" afterPath="$PROJECT_DIR$/client_start.spec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/client_start.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/client_start.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server_start.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server_start.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/Tank.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/Tank.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/Character.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/Character.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/ClientHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/ClientHandler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/Match.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/Match.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/RoomAnalyzer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/UdpServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/UdpServer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server_start.spec" beforeDir="false" afterPath="$PROJECT_DIR$/server_start.spec" afterDir="false" />
-    </list>
+    <list default="true" id="7dfdb020-3d1d-493d-9f52-4accd25378b3" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,12 +85,12 @@
           <entry key="Python Console" value="1276" />
           <entry key="dummy" value="40" />
           <entry key="py" value="41074" />
-          <entry key="txt" value="436" />
+          <entry key="txt" value="485" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="476" />
+          <entry key="PLAIN_TEXT" value="525" />
           <entry key="Python" value="42350" />
         </counts>
       </usages-collector>
@@ -713,7 +680,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543949212239</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Bug fixes on the server / client">
+      <created>1544550020304</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1544550020304</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView">
@@ -728,7 +702,7 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21601686" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21601686" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -739,7 +713,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286334" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3286334" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3253796" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3253796" />
       <window_info anchor="bottom" id="Python Console" order="9" weight="0.329718" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -819,7 +793,8 @@
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;build/client_start/EXE-00.toc&#10;#&#9;dist/client_start.exe" />
     <MESSAGE value="Server fixes" />
     <MESSAGE value="Update build and dist" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update build and dist" />
+    <MESSAGE value="Bug fixes on the server / client" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes on the server / client" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/README.md">
