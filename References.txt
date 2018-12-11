@@ -1,0 +1,21 @@
+https://stackoverflow.com/questions/28005641/how-to-add-a-background-image-into-pygame
+
+https://stackoverflow.com/questions/29662908/how-do-i-blit-an-image-to-a-surface-in-pygame-thats-the-same-size-as-a-rectangl
+
+https://stackoverflow.com/questions/32781858/pygame-blit-part-of-an-imagebackground-image
+
+
+
+
+Images:
+
+Céu: (128, 229, 255)
+https://opengameart.org/content/sky-backdrop
+
+Chão: (77, 38, 0)
+https://opengameart.org/content/dirt-texture
+https://opengameart.org/content/ground-outdoors-dirt-and-stones-seamless-texture-with-normalmap-0
+
+Tank: (0, 102, 0)
+
+
