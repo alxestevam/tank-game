@@ -4,7 +4,7 @@ import pygame
 from math import sin, cos
 from game.Entity import Entity
 from game.Constants import Constants
-from pygame.color import THECOLORS
+
 
 class Tank(Entity):
     # TODO: Put sprite image at constructor

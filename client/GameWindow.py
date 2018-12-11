@@ -64,6 +64,7 @@ class GameWindow(threading.Thread):
 
             if cmd == 0:
                 self.isRunning = False
+                self.serverHandler.cmd_surrender()
                 break
             elif cmd == 1:
                 self.charging = True

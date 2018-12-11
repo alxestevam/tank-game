@@ -21,16 +21,18 @@ class Match(Environment):
         self.uidHex = uuid.uuid4().hex
         # TODO: Add terrain variation
         Terrain(self, vertices=Constants.TERRAIN_CONFIG['1']['vertices'])
-
+        self.teams = {1: [],
+                      2: []}
         # Creating the characters for each player
-        team = 1
+        team_num = 1
         for room in self.rooms:
             for uid, player in room.players.items():
                 player.match = self
                 player.ready = False
-                character = Character(self, player, team)
+                character = Character(self, player, team_num)
                 self.characters[character.uidHex] = character
-            team += 1
+                self.teams[team_num].append(character)
+            team_num += 1
 
     def run(self):
         time_step = 1.0 / Constants.FPS*1.5
@@ -46,16 +48,37 @@ class Match(Environment):
                 if isinstance(obj, Entity):
                     obj.update()
 
-            for char in self.characters.values():
-                if char is not None:
-                    if char.tank.health <= 0:
-                        run = False
-                        for room in self.rooms:
-                            for player in room.players.values():
-                                player.match = None
-                                player.ready = False
-                                player.character = None
-                        # TODO: show the winner
+            end_game = True
+            team_winner = 0
+            for num, team in self.teams.items():
+                end_game = True
+                team_winner = 0
+                for char in team:
+                    if char is not None:
+                        if char.tank.health > 0 and (not char.surrender):
+                            end_game = False
+                            break
+                if end_game:
+                    team_winner = num
+                    break
+
+            if end_game:
+                run = False
+                for room in self.rooms:
+                    for player in room.players.values():
+                        player.match = None
+                        player.ready = False
+                        player.character = None
+
+                # TODO: show the winners
+                winners = "Team: "
+                team = team_winner
+                for ch in self.characters.values():
+                    if team == ch.team:
+                        winners += ch.player.nickname + " "
+
+                for ch in self.characters.values():
+                    ch.player.nextWinners = winners
 
             time += dt_s
 

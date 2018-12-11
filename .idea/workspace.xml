@@ -3,6 +3,37 @@
   <component name="ChangeListManager">
     <list default="true" id="7dfdb020-3d1d-493d-9f52-4accd25378b3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/client_start/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/Analysis-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/client_start/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/EXE-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/client_start/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PKG-00.pkg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/client_start/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PKG-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/client_start/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PYZ-00.pyz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/client_start/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/PYZ-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/client_start/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/base_library.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/client_start/warn-client_start.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/warn-client_start.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/client_start/xref-client_start.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/client_start/xref-client_start.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/server_start/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/Analysis-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/server_start/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/EXE-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/server_start/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/PKG-00.pkg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/server_start/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/PKG-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/server_start/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/PYZ-00.pyz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/server_start/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/PYZ-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/server_start/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/base_library.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/server_start/warn-server_start.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/warn-server_start.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/server_start/xref-server_start.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/server_start/xref-server_start.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/GameWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/GameWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/ServerHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/ServerHandler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_start.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_start.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_start.spec" beforeDir="false" afterPath="$PROJECT_DIR$/client_start.spec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/client_start.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/client_start.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server_start.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server_start.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Tank.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/Tank.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/Character.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/Character.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/ClientHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/ClientHandler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/Match.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/Match.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/RoomAnalyzer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/UdpServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/UdpServer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_start.spec" beforeDir="false" afterPath="$PROJECT_DIR$/server_start.spec" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +84,7 @@
     <session id="1271020318">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="14" />
+          <entry key="project.closed" value="16" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.25" value="1" />
@@ -63,36 +94,37 @@
           <entry key="project.open.time.33" value="1" />
           <entry key="project.open.time.34" value="2" />
           <entry key="project.open.time.36" value="1" />
-          <entry key="project.open.time.39" value="1" />
-          <entry key="project.open.time.41" value="1" />
+          <entry key="project.open.time.38" value="1" />
+          <entry key="project.open.time.39" value="2" />
+          <entry key="project.open.time.41" value="2" />
           <entry key="project.open.time.48" value="1" />
           <entry key="project.open.time.50" value="1" />
           <entry key="project.open.time.56" value="1" />
-          <entry key="project.opened" value="17" />
+          <entry key="project.opened" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="211" />
+          <entry key="py" value="221" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="211" />
+          <entry key="Python" value="221" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="1276" />
           <entry key="dummy" value="40" />
-          <entry key="py" value="38649" />
-          <entry key="txt" value="413" />
+          <entry key="py" value="41074" />
+          <entry key="txt" value="436" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="453" />
-          <entry key="Python" value="39925" />
+          <entry key="PLAIN_TEXT" value="476" />
+          <entry key="Python" value="42350" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -110,35 +142,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game/Tank.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3348">
-              <caret line="130" column="37" selection-start-line="130" selection-start-column="37" selection-end-line="131" selection-end-column="27" />
+            <state relative-caret-position="-216">
+              <caret line="133" column="33" selection-start-line="133" selection-start-column="33" selection-end-line="133" selection-end-column="33" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
-                <marker date="1539078388972" expanded="true" signature="5528:5648" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/ClientHandler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2457">
-              <caret line="98" column="15" selection-start-line="98" selection-start-column="15" selection-end-line="98" selection-end-column="15" />
-              <folding>
-                <element signature="e#0#16#0" expanded="true" />
+                <marker date="1544196000235" expanded="true" signature="5494:5614" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/ServerHandler.py">
+        <entry file="file://$PROJECT_DIR$/server/UdpServer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="234" column="36" lean-forward="true" selection-start-line="234" selection-start-column="36" selection-end-line="234" selection-end-column="36" />
+            <state relative-caret-position="-287">
+              <caret line="105" column="26" selection-start-line="105" selection-start-column="26" selection-end-line="105" selection-end-column="26" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
+                <marker date="1544548893666" expanded="true" signature="2320:2326" ph="..." />
               </folding>
             </state>
           </provider>
@@ -147,49 +168,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/Match.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1323">
-              <caret line="59" column="24" selection-start-line="59" selection-start-column="24" selection-end-line="59" selection-end-column="24" />
+            <state relative-caret-position="564">
+              <caret line="62" column="25" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="25" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
-                <marker date="1543862186194" expanded="true" signature="2166:2171" ph="..." />
-                <marker date="1543862186194" expanded="true" signature="2197:2206" ph="..." />
+                <marker date="1544549590438" expanded="true" signature="2946:2951" ph="..." />
+                <marker date="1544549590438" expanded="true" signature="2977:2986" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/RoomAnalyzer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
-              <caret line="29" selection-start-line="29" selection-end-line="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/Room.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1269">
-              <caret line="48" column="30" selection-start-line="48" selection-start-column="30" selection-end-line="48" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/GameWindow.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4212">
-              <caret line="166" column="25" selection-start-line="166" selection-start-column="25" selection-end-line="166" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game/Bullet.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -197,17 +182,68 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/Character.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="466">
+              <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game/Terrain.py">
+        <entry file="file://$PROJECT_DIR$/client_start.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1296">
-              <caret line="53" column="36" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
+            <state relative-caret-position="54">
+              <caret line="2" column="39" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server_start.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="23" selection-start-column="23" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/ServerHandler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-304">
+              <caret line="136" column="24" selection-start-line="136" selection-start-column="24" selection-end-line="136" selection-end-column="24" />
+              <folding>
+                <marker date="1544548816115" expanded="true" signature="4227:4435" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/ClientHandler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="385">
+              <caret line="47" column="34" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
+              <folding>
+                <marker date="1544549231418" expanded="true" signature="6064:6149" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/Room.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/GameWindow.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="307">
+              <caret line="66" column="50" selection-start-line="66" selection-start-column="50" selection-end-line="66" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -256,7 +292,6 @@
         <option value="$PROJECT_DIR$/client/gameWindow.py" />
         <option value="$PROJECT_DIR$/game/Sprite.py" />
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/server/Character.py" />
         <option value="$PROJECT_DIR$/start.py" />
         <option value="$PROJECT_DIR$/server.py" />
         <option value="$PROJECT_DIR$/client.py" />
@@ -266,23 +301,24 @@
         <option value="$PROJECT_DIR$/game/Terrain.py" />
         <option value="$PROJECT_DIR$/game/Environment.py" />
         <option value="$PROJECT_DIR$/server_start.py" />
-        <option value="$PROJECT_DIR$/server/Room.py" />
         <option value="$PROJECT_DIR$/client/Lobby.py" />
         <option value="$PROJECT_DIR$/client/LoginScreen.py" />
         <option value="$PROJECT_DIR$/client/CONFIG.py" />
-        <option value="$PROJECT_DIR$/server/UdpServer.py" />
         <option value="$PROJECT_DIR$/client/LobbyScreen.py" />
-        <option value="$PROJECT_DIR$/game/Entity.py" />
         <option value="$PROJECT_DIR$/game/Constants.py" />
         <option value="$PROJECT_DIR$/game/Bullet.py" />
         <option value="$PROJECT_DIR$/game/ContactListener.py" />
-        <option value="$PROJECT_DIR$/game/Tank.py" />
-        <option value="$PROJECT_DIR$/client_start.py" />
         <option value="$PROJECT_DIR$/server/RoomAnalyzer.py" />
-        <option value="$PROJECT_DIR$/client/GameWindow.py" />
-        <option value="$PROJECT_DIR$/server/Match.py" />
-        <option value="$PROJECT_DIR$/server/ClientHandler.py" />
+        <option value="$PROJECT_DIR$/game/Tank.py" />
+        <option value="$PROJECT_DIR$/game/Entity.py" />
+        <option value="$PROJECT_DIR$/server/Room.py" />
+        <option value="$PROJECT_DIR$/client_start.py" />
+        <option value="$PROJECT_DIR$/server/Character.py" />
         <option value="$PROJECT_DIR$/client/ServerHandler.py" />
+        <option value="$PROJECT_DIR$/client/GameWindow.py" />
+        <option value="$PROJECT_DIR$/server/UdpServer.py" />
+        <option value="$PROJECT_DIR$/server/ClientHandler.py" />
+        <option value="$PROJECT_DIR$/server/Match.py" />
       </list>
     </option>
   </component>
@@ -297,32 +333,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="tank-game" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tank-game" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tank-game" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tank-game" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tank-game" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tank-game" type="462c0819:PsiDirectoryNode" />
-              <item name="game" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tank-game" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tank-game" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
           <expand>
@@ -353,6 +363,37 @@
               <item name="tank-game" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="server" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="tank-game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tank-game" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tank-game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tank-game" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tank-game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tank-game" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tank-game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tank-game" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tank-game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tank-game" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -665,7 +706,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543863316250</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Update build and dist">
+      <created>1543949212239</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1543949212239</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TodoView">
@@ -678,9 +726,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="953" y="0" width="974" height="1047" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28846154" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21601686" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -691,7 +739,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286334" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3286334" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.33187294" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3253796" />
       <window_info anchor="bottom" id="Python Console" order="9" weight="0.329718" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -770,7 +818,8 @@
     <MESSAGE value="Server and Client Update, Player Health and Simple GUI" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;build/client_start/EXE-00.toc&#10;#&#9;dist/client_start.exe" />
     <MESSAGE value="Server fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Server fixes" />
+    <MESSAGE value="Update build and dist" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update build and dist" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/README.md">
@@ -863,34 +912,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/Entity.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server_start.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="6" column="39" lean-forward="true" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/UdpServer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1987">
-          <caret line="100" column="33" selection-start-line="100" selection-start-column="33" selection-end-line="100" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client_start.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="5" column="39" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game/Constants.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-7">
@@ -914,62 +935,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/game/Environment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="39" column="8" selection-start-line="39" selection-start-column="8" selection-end-line="39" selection-end-column="31" />
+        <state relative-caret-position="1134">
+          <caret line="45" column="22" lean-forward="true" selection-start-line="45" selection-start-column="22" selection-end-line="45" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/Tank.py">
+    <entry file="file://$PROJECT_DIR$/game/Terrain.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3348">
-          <caret line="130" column="37" selection-start-line="130" selection-start-column="37" selection-end-line="131" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-            <marker date="1539078388972" expanded="true" signature="5528:5648" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/ClientHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2457">
-          <caret line="98" column="15" selection-start-line="98" selection-start-column="15" selection-end-line="98" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/Match.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1323">
-          <caret line="59" column="24" selection-start-line="59" selection-start-column="24" selection-end-line="59" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-            <marker date="1543862186194" expanded="true" signature="2166:2171" ph="..." />
-            <marker date="1543862186194" expanded="true" signature="2197:2206" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/RoomAnalyzer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/Room.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1269">
-          <caret line="48" column="30" selection-start-line="48" selection-start-column="30" selection-end-line="48" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/GameWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4212">
-          <caret line="166" column="25" selection-start-line="166" selection-start-column="25" selection-end-line="166" selection-end-column="25" />
+        <state relative-caret-position="1195">
+          <caret line="53" column="36" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -980,26 +954,108 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/Character.py">
+    <entry file="file://$PROJECT_DIR$/game/Entity.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="243">
+          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/Terrain.py">
+    <entry file="file://$PROJECT_DIR$/server/RoomAnalyzer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1296">
-          <caret line="53" column="36" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
+        <state relative-caret-position="459">
+          <caret line="17" column="8" lean-forward="true" selection-start-line="17" selection-start-column="8" selection-end-line="28" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/Room.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/GameWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="66" column="50" selection-start-line="66" selection-start-column="50" selection-end-line="66" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/ClientHandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="47" column="34" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
+          <folding>
+            <marker date="1544549231418" expanded="true" signature="6064:6149" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/Tank.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-216">
+          <caret line="133" column="33" selection-start-line="133" selection-start-column="33" selection-end-line="133" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+            <marker date="1544196000235" expanded="true" signature="5494:5614" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/ServerHandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="234" column="36" lean-forward="true" selection-start-line="234" selection-start-column="36" selection-end-line="234" selection-end-column="36" />
+        <state relative-caret-position="-304">
+          <caret line="136" column="24" selection-start-line="136" selection-start-column="24" selection-end-line="136" selection-end-column="24" />
+          <folding>
+            <marker date="1544548816115" expanded="true" signature="4227:4435" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server_start.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="23" selection-start-column="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/Character.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_start.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="2" column="39" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/Match.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="564">
+          <caret line="62" column="25" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+            <marker date="1544549590438" expanded="true" signature="2946:2951" ph="..." />
+            <marker date="1544549590438" expanded="true" signature="2977:2986" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/UdpServer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-287">
+          <caret line="105" column="26" selection-start-line="105" selection-start-column="26" selection-end-line="105" selection-end-column="26" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
+            <marker date="1544548893666" expanded="true" signature="2320:2326" ph="..." />
           </folding>
         </state>
       </provider>

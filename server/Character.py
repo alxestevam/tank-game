@@ -13,6 +13,9 @@ class Character:
         self.uidHex = player.uidHex
         self.team = team
         player.character = self
+        self.player = player
+        self.surrender = False
 
     def shoot(self, energy):
-        self.tank.server_shoot(energy)
+        if self.tank.health > 0:
+            self.tank.server_shoot(energy)

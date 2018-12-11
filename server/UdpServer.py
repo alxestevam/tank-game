@@ -2,9 +2,8 @@ import threading
 import socket
 import json
 import queue
-import uuid
+from server.Match import Match
 import time
-from server.RoomAnalyzer import RoomAnalyzer
 from server.Room import Room
 from server.ClientHandler import ClientHandler
 from game.Constants import Constants
@@ -29,7 +28,12 @@ class UdpServer(threading.Thread, socket.socket):
         self.autoFillRooms = {'duo': {},
                               'squad': {}}
         self.matches = []
-        self.analyzer = RoomAnalyzer(self)
+        self.roomsReady = {
+            'solo': [],
+            'duo': [],
+            'squad': []
+        }
+
         self.clientIpList = list(range(Constants.DEFAULT_PORT + 1, Constants.DEFAULT_PORT
                                        + Constants.SERVER_PLAYER_LIMIT))
 
@@ -37,10 +41,26 @@ class UdpServer(threading.Thread, socket.socket):
         print('Hosting at', self.getsockname())
         print('Starting')
 
-        self.analyzer.start()
+        room_analyzer = threading.Thread(target=self.analise_rooms, name="Room Analyzer")
+        room_analyzer.setDaemon(True)
+        room_analyzer.start()
 
         while True:
             self.receive_command()
+
+    def analise_rooms(self):
+        while True:
+            for type_room, list_room in self.roomsReady.copy().items():
+                if len(list_room) < 2 and not self.readyRooms[type_room].empty():
+                    room = self.readyRooms[type_room].get()
+                    if room.isActive:
+                        self.roomsReady[type_room].append(room)
+                if len(list_room) == 2:
+                    if self.roomsReady[type_room][0] != self.roomsReady[type_room][1]:
+                        match = Match(self, self.roomsReady[type_room])
+                        match.start()
+                        self.matches.append(match)
+                    self.roomsReady[type_room] = []
 
     def receive_command(self):
         # TODO: Handle possible errors
@@ -70,10 +90,11 @@ class UdpServer(threading.Thread, socket.socket):
             print('Client connected:', address_info, payload)
             self.clients.append(address_info)
             self.clientCounter += 1
+            nickname = payload['nickname']
             # Create ClientHandler
             port = self.clientIpList[0]
             del self.clientIpList[0]
-            ch = ClientHandler(self, address_info, port, client_info)
+            ch = ClientHandler(self, address_info, port, client_info, nickname)
             self.clientAddresses[address_info] = ch.uidHex
             ch.start()
 

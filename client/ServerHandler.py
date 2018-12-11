@@ -11,7 +11,7 @@ from client.LobbyScreen import LobbyScreen
 
 
 class ServerHandler(threading.Thread, socket.socket):
-    def __init__(self, server_address):
+    def __init__(self, server_address, nickname):
         threading.Thread.__init__(self, name='ServerHandler Thread')
         socket.socket.__init__(self, type=socket.SOCK_DGRAM)
         self.settimeout(2)
@@ -27,6 +27,8 @@ class ServerHandler(threading.Thread, socket.socket):
         self.gameWindow = None
         self.lock = threading.Lock()
         self.clock = Clock()
+        self.nickname = nickname
+        self.nextWinners = ""
 
     def run(self):
         while self.uidHex is None:
@@ -40,7 +42,6 @@ class ServerHandler(threading.Thread, socket.socket):
         lobby_screen = LobbyScreen(self)
         lobby_screen.start()
         while True:
-
             while self.matchUid is None:
                 self.cmd_update_lobby()
                 try:
@@ -60,6 +61,8 @@ class ServerHandler(threading.Thread, socket.socket):
                     self.handle_command(data)
                 except Exception:
                     pass
+
+            print("Acabou a partida\n Ganhadores: ", self.nextWinners)
 
     def cmd_update_lobby(self):
         data = json.dumps({
@@ -87,7 +90,7 @@ class ServerHandler(threading.Thread, socket.socket):
         data = json.dumps({
             'action': 'connect_client',
             'payload': {
-                'description': 'payload_for_authentication'
+                'nickname': self.nickname,
             }
         }).encode('utf-8')
 
@@ -127,6 +130,24 @@ class ServerHandler(threading.Thread, socket.socket):
         }).encode('utf-8')
         self.sendto(data, self.server_address)
 
+    def cmd_surrender(self):
+        data = json.dumps({
+            'client_uid': self.uidHex,
+            'action': 'surrender',
+            'payload': {}
+        }).encode('utf-8')
+        self.sendto(data, self.server_address)
+
+    def cmd_change_room_type(self, num):
+        if num == 1 or num == 2 or num == 4:
+            data = {
+                'client_uid': self.uidHex,
+                'action': 'change_room_type',
+                'payload': num,
+            }
+
+            self.sendto(json.dumps(data).encode('utf-8'), self.server_address)
+
     def handle_command(self, data):
         if data:
             decoded = data.decode('utf-8')
@@ -153,6 +174,8 @@ class ServerHandler(threading.Thread, socket.socket):
                         self.handle_cmd_join_room(data)
                     if action == 'world_locations':
                         self.handle_cmd_world_locations(data)
+                    if action == 'end_game':
+                        self.handle_cmd_end_game(data)
 
     def handle_cmd_uid_to_client(self, data):
         original_server = self.server_address
@@ -200,6 +223,31 @@ class ServerHandler(threading.Thread, socket.socket):
                 self.gameWindow.close_game()
                 self.matchUid = None
 
+    def handle_cmd_end_game(self, data):
+        uid_hex = self.uidHex
+        current_room_uid = self.currentRoomUid
+        ready = self.ready
+
+        try:
+            self.uidHex = data['client_uid']
+            self.currentRoomUid = data['payload']['room_uid']
+            self.ready = data['payload']['ready']
+            match = data['payload']['match']
+            self.nextWinners = data['payload']['winners']
+        except KeyError:
+            self.uidHex = uid_hex
+            self.currentRoomUid = current_room_uid
+            self.ready = ready
+            print(KeyError)
+        else:
+            if self.matchUid is None and match is not None:
+                self.gameWindow = GameWindow(self)
+                self.gameWindow.start_game()
+                self.matchUid = match
+            if self.matchUid is not None and match is None:
+                self.gameWindow.close_game()
+                self.matchUid = None
+
     def handle_cmd_world_locations(self, data):
         self.handle_cmd_update_lobby(data)
         if self.matchUid is not None:
@@ -218,35 +266,38 @@ class ServerHandler(threading.Thread, socket.socket):
                 except KeyError:
                     print(KeyError)
 
-
-def test_menu(server_handler):
-    time.sleep(1)
-    op = 0
-    while op != 7:
-        op = int(input("[1] Print Current Room uid\n"
-                       "[2] Print Main Room Uid\n"
-                       "[3] Join room\n"
-                       "[4] Leave room\n"
-                       "[5] Ready\n"
-                       "[6] Status\n"
-                       "[7] Disconnect\n"
-                       "Choose: "))
-        if op == 1:
-            print(server_handler.currentRoomUid)
-        elif op == 2:
-            print(server_handler.mainRoomUid)
-        elif op == 3:
-            room_uid = input("UID: ")
-            server_handler.cmd_join_room(room_uid)
-        elif op == 4:
-            server_handler.cmd_leave_room()
-        elif op == 5:
-            server_handler.cmd_toggle_ready()
-        elif op == 6:
-            if server_handler.ready:
-                print('Ready!')
-            else:
-                print('Not ready.')
+    def test_menu(self):
+        time.sleep(1)
+        op = 0
+        while op != 8:
+            op = int(input("[1] Print Current Room uid\n"
+                           "[2] Print Main Room Uid\n"
+                           "[3] Join room\n"
+                           "[4] Leave room\n"
+                           "[5] Ready\n"
+                           "[6] Status\n"
+                           "[7] Room Type\n"
+                           "[8] Disconnect\n"
+                           "Choose: "))
+            if op == 1:
+                print(self.currentRoomUid)
+            elif op == 2:
+                print(self.mainRoomUid)
+            elif op == 3:
+                room_uid = input("UID: ")
+                self.cmd_join_room(room_uid)
+            elif op == 4:
+                self.cmd_leave_room()
+            elif op == 5:
+                self.cmd_toggle_ready()
+            elif op == 6:
+                if self.ready:
+                    print('Ready!')
+                else:
+                    print('Not ready.')
+            elif op == 7:
+                typ = int(input("Number of players: [1, 2 , 4]: "))
+                self.cmd_change_room_type(typ)
 
 
 if __name__ == '__main__':

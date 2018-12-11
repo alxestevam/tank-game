@@ -9,7 +9,7 @@ from game.Constants import Constants
 
 
 class ClientHandler(threading.Thread, socket.socket):
-    def __init__(self, udp_server, client_address, port, client_info):
+    def __init__(self, udp_server, client_address, port, client_info, nickname):
         threading.Thread.__init__(self, name='Client Handler Thread')
         socket.socket.__init__(self, type=socket.SOCK_DGRAM)
         # TODO: Configure the timeout
@@ -24,13 +24,14 @@ class ClientHandler(threading.Thread, socket.socket):
         self.match = None
         self.uidHex = uuid4().hex
         self.commands = queue.Queue()
-
+        self.nickname = nickname
         self.mainRoom = Room(udp_server, self, client_info['lastRoomType'])
-        self.cmd_uid_to_client(port)
         self.currentRoom = self.mainRoom
         self.character = None
         self.clock = Clock()
         self.connected = True
+        self.nextWinners = ""
+        self.cmd_uid_to_client(port)
 
     def run(self):
         while self.connected:
@@ -42,6 +43,7 @@ class ClientHandler(threading.Thread, socket.socket):
                 self.connected = False
                 if self.character is not None:
                     self.character.tank.health = 0
+                    self.character.surrender = True
                 self.server.clientIpList.append(self.port)
                 self.mainRoom.delete_room()
                 self.currentRoom.delete_player(self.uidHex)
@@ -72,6 +74,10 @@ class ClientHandler(threading.Thread, socket.socket):
                             self.handle_cmd_player_shoot(data)
                         if action == 'update_world':
                             self.handle_cmd_update_world(data)
+                        if action == 'change_room_type':
+                            self.handle_cmd_change_room_type(data)
+                        if action == 'surrender':
+                            self.handle_cmd_surrender()
                 except KeyError:
                     pass
 
@@ -103,14 +109,23 @@ class ClientHandler(threading.Thread, socket.socket):
                 'payload': {
                     'locations': self.match.world_locations(),
                     'room_uid': self.currentRoom.uidHex,
-                    'ready': self.ready
+                    'ready': self.ready,
+                    'match': self.match.uidHex
                 }
             }
 
-            if self.match is None:
-                data['payload']['match'] = None
-            else:
-                data['payload']['match'] = self.match.uidHex
+            self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
+        else:
+            data = {
+                'client_uid': self.uidHex,
+                'action': 'end_game',
+                'payload': {
+                    'room_uid': self.currentRoom.uidHex,
+                    'ready': self.ready,
+                    'match': None,
+                    'winners': self.nextWinners
+                }
+            }
 
             self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
 
@@ -130,6 +145,24 @@ class ClientHandler(threading.Thread, socket.socket):
             data['payload']['match'] = self.match.uidHex
 
         self.sendto(json.dumps(data).encode('utf-8'), self.clientAddress)
+
+    def handle_cmd_change_room_type(self, data):
+        # TODO: Tirar bugs, passar a função para um método dentro da classe Room
+        if self.currentRoom == self.mainRoom:
+            try:
+                typ = data['payload']
+                if typ == 1:
+                    self.currentRoom.room_type = 'solo'
+                elif typ == 2:
+                    self.currentRoom.room_type = 'duo'
+                elif typ == 4:
+                    self.currentRoom.room_type = 'squad'
+            except(Exception):
+                pass
+
+    def handle_cmd_surrender(self):
+        if self.match is not None:
+            self.character.surrender = True
 
     def handle_cmd_join_room(self, data):
         try:
